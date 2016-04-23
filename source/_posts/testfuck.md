@@ -6,21 +6,21 @@ categories:
 tags:
   - Testing
 ---
-
-这里是测试页面, ++
+	
+这里是测试页面
 
 
 ### this is a pp
-die
+from emacs haha
 
 
 ### this is hoho
 
 
-``` js
+\`\`\` js
 
 let a = 1;
 console.log('hello word')
 
 
-```
+\`\`\`
