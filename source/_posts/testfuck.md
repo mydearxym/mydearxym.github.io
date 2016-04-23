@@ -15,3 +15,12 @@ die
 
 
 ### this is hoho
+
+
+``` js
+
+let a = 1;
+console.log('hello word')
+
+
+```
