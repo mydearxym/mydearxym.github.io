@@ -76,6 +76,7 @@ deploy:
   branch: master
 
 org:
+  toc: false
   emacs: '/Applications/Emacs.app/Contents/MacOS/Emacs'
   common: |
           #+OPTIONS: toc:nil
