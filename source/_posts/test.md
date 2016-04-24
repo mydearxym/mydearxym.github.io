@@ -1,5 +1,5 @@
 ---
-title: testfuck
+title: test
 date: 2016-04-23 08:14:44
 categories:
   - Diary
@@ -17,10 +17,10 @@ from emacs haha
 ### this is hoho
 
 
-\`\`\` js
+``` js
 
 let a = 1;
 console.log('hello word')
 
 
-\`\`\`
+```
