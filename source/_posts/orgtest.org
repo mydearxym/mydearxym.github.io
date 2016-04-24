@@ -1,0 +1,21 @@
+#+TITLE: Hello,orgmode
+#+DATE: <2016-04-24 Sun 17:00>
+#+TAGS: emacs, orgmode
+#+CATEGORIES: orgmode
+
+
+* ei
+   diek
+** this is one
+   this os one content
+   this os two content ?
+
+#+BEGIN_SRC js
+console.log('hello');
+#+END_SRC
+
+** this is two
+   this os one content ?
+   this os two content ?
+*** diek
+    dfejidjfiedkfjidfe

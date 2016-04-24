@@ -74,3 +74,12 @@ deploy:
   type: git
   repo: https://github.com/mydearxym/mydearxym.github.io.git
   branch: master
+
+org:
+  emacs: '/Applications/Emacs.app/Contents/MacOS/Emacs'
+  common: |
+          #+OPTIONS: toc:nil
+          #+BIND: org-html-postamble \"<div></div>\"
+  cachedir: './hexo-org-cache/'
+
+
