@@ -79,7 +79,7 @@ org:
   toc: false
   emacs: '/Applications/Emacs.app/Contents/MacOS/Emacs'
   common: |
-          #+OPTIONS: toc:nil
+          #+OPTIONS: num:nil, toc:nil
           #+BIND: org-html-postamble \"<div></div>\"
   cachedir: './hexo-org-cache/'
 
