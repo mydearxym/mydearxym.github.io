@@ -4,14 +4,8 @@
 #+CATEGORIES: 默认分类
 
 
-写点什么吧
 
 
-an image without description
-[[file:/images/ll.png]]
+** 插入截图
 
-#+ATTR_HTML:  :alt caption
-[[images/ll.png]]
-
-
-![logo](/images/ll.png)
+{% fi /images/2016.04.25.23.53.jietu.png %}
