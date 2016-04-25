@@ -1,0 +1,16 @@
+#+TITLE: first-blog
+#+DATE: <2016-04-25 20:57:32>
+#+TAGS: 默认标签
+#+CATEGORIES: 默认分类
+
+
+写点什么吧
+
+an image without description
+[[file:/images/ll.png]]
+
+#+ATTR_HTML:  :alt caption
+[[images/ll.png]]
+
+
+![logo](/images/ll.png)
