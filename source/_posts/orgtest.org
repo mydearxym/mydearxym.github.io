@@ -4,15 +4,28 @@
 #+CATEGORIES: orgmode
 
 
+
+{% cq %} centerquote 的别名 {% endcq %}
+
 * yi?>>>?
    diek
 ** this is one
-   this os one content
-   this os two content ????
+   this os one ***content***
+   this os two `不支持这种 Markdown 语法` ????
 
-#+BEGIN_SRC js
-console.log('hello');
-#+END_SRC
+   this os two ``` bash 不支持这种 Markdown 语法 ``` ????
+
+   this os two 【 **bash 不支持这种 Markdown 语法** 】 ????
+
+   `<div>this fuck</div>`
+
+
+   > 这里是引用
+
+
+   #+BEGIN_SRC js
+   console.log('hello');
+   #+END_SRC
 
 ** this is two
    this os one content ?
