@@ -73,6 +73,7 @@ theme: next
 deploy:
   type: git
   repo: https://github.com/mydearxym/mydearxym.github.io.git
+  # repo: git@github.com:mydearxym/mydearxym.github.io.git
   branch: master
 
 org:
@@ -82,5 +83,3 @@ org:
           #+OPTIONS: num:nil, toc:nil
           #+BIND: org-html-postamble \"<div></div>\"
   cachedir: './hexo-org-cache/'
-
-
