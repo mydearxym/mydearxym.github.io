@@ -1,9 +1,0 @@
-#+TITLE: other org
-#+DATE: <2016-04-24 23:16:06>
-#+TAGS: 默认标签
-#+CATEGORIES: 默认分类
-
-
-写点什么吧
-
-test it
