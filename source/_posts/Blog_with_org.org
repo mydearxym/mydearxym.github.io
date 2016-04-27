@@ -1,0 +1,145 @@
+#+TITLE: 使用 Emacs 的 org-mode 写博客
+#+DATE: <2016-04-25 20:57:32>
+#+TAGS: Hexo,  Emacs, org
+#+CATEGORIES: 工具链
+
+
+
+* 安装配置
+
+  1. 首先安装[[https://hexo.io/zh-cn/][ Hexo 博客框架]] ,  再挑选一款你喜欢的 [[http://theme-next.iissnan.com/getting-started.html][主题（这里用的是 Next）]]
+  2. 在 Github 上创建一个 xxx.github.io 的仓库, xxx 名字可以随便起，Github 会自动 server 这个以 *github.io* 结
+     尾的仓库。
+  3. 安装 hexo 的 git 插件, 用于 deploy, 具体配置参见上述文档的 deploy 章节即可，都很直观。
+
+
+  #+BEGIN_SRC bash
+  npm install hexo-deployer-git--save
+  #+END_SRC
+
+  4. 安装[[https://github.com/CodeFalling/hexo-renderer-org][ hexo 的 org 插件]] , 默认使用 org 而不是 markdown。
+
+
+
+  *可能出现的错误*:
+  1. 部署时返回 empty reply ...,  可能是你在之前的环节（比如 npm install 或者 hexo g 等等） 使用了 sudo,  这时
+     你需要在部署命令 hexo deploy 前也加上 sudo
+  2. 如果你整个站点只有一篇文章，那么 <!--more--> 标签或 hexo 默认自带的截断标签是不起作用的，默认会显示全文。
+  3. 默认不需要提交 commit message,  hexo 会自动将 message 填写为 update ..datetime... 的形式。
+  4. Hexo 底层使用 highlight.js  在某些语法尤其是 *--*,  表格等 上会导致 hexo generate 卡死。
+
+
+#+BEGIN_HTML
+<!--more-->
+#+END_HTML
+
+
+* 关于使用
+** M-x blog-new 添加新文章
+
+   这需要在你的 emacs config 中添加如下函数：
+
+   #+BEGIN_SRC emacs-lisp
+   (defun blog-new (post-name)
+     "create a hexo org post"
+     (interactive "sInput post name:")
+     (find-file (format "%s/source/_posts/%s.org" hexo-dir post-name))
+     (insert (format "#+TITLE: %s
+    #+DATE: <%s>
+    #+TAGS: 默认标签
+    #+CATEGORIES: 默认分类
+
+
+    写点什么吧
+    "  post-name (format-time-string "%Y-%m-%d %H:%M:%S"))))
+
+   #+END_SRC
+
+
+** 居中引用
+
+   {% cq %} 这里是居中引用, centerquote  的别名 {% endcq %}
+
+** 插入代码
+
+   #+BEGIN_SRC bash
+   <s Tab
+   #+END_SRC
+
+
+** 插入截图
+
+   在需要截图的地方输入
+
+   #+BEGIN_SRC bash
+   M-x capture-screenshot
+   #+END_SRC
+
+   Emacs 会让你给截图起个名字（按提示在 miniBuffer 中输入即可），然后调用 **screencapture** 这个命令行程序截图、将下面的字符串插入到你调用该命令的地方
+
+   {% fi /images/2016.04.26.22.46.captureShow.png %}
+
+   截图相关的代码如下:
+
+
+#+BEGIN_SRC emacs-lisp
+
+  (defun insert-org-or-md-img-link (prefix imagename)
+    (if (equal (file-name-extension (buffer-file-name)) "md")
+        (insert (format "[[%s][%s%s]]" imagename prefix imagename)))
+    (insert (format "%s%s fi %s%s%s" "{" "%" prefix (concat (format-time-string "%Y.%m.%d.%H.%M") "." imagename " %" "}"))))
+
+  (defun capture-screenshot (basename)
+    "Take a screenshot into a time stamped unique-named file in the
+  same directory as the org-buffer/markdown-buffer and insert a link to this file."
+    (interactive "sScreenshot name: ")
+    (if (equal basename "")
+        (setq basename (format-time-string "%Y%m%d_%H%M%S")))
+    (setq fullpath
+          (concat (file-name-directory (buffer-file-name))
+                  (file-name-base (buffer-file-name))
+                  "_"
+                  basename))
+    (progn
+      (call-process "screencapture" nil nil nil "-s"
+                    (concat  "/Users/xieyiming/blog/source/images/"  (format-time-string "%Y.%m.%d.%H.%M") "."  basename  ".png"))
+      (insert-org-or-md-img-link "/images/" (concat basename ".png")))
+    (insert "\n"))
+
+#+END_SRC
+
+*注意事项*
+
+1. nexT 主题会拦截 *{* *%* 以及 *%* *}* 组成的字符串，这是其 [[http://theme-next.iissnan.com/tag-plugins.html][内建标签]] 的关键字，连在一起使用会导致 hexo 编译错误。
+   这也是为何上面 elisp 代码中把 *{* *%* 以及 *%* *}* 分开拼装的原因。
+
+2. org 文档中无法使用 MarkDown 的图片引用法则,  比如: *![alt](/images/2016.04.25.23.53.jietu.png)*, 这样写不报错但也不会被正确解析。
+
+3. 这种写法有一个好处是无论在首页还是在具体某一篇文章页面，其所引用的图片都指向公共目录
+   *source/images/xxx.png*,  不需要在去配置资源的相对路径什么的, 对于图片不是很多的个人博客来说还是比较方便的。
+
+4. 好处之二就是可以利用[[https://github.com/syl20bnr/spacemacs/tree/master/layers/org%20%20%20][ 各种 org 魔法]] 来写博客啦！
+
+
+** 插入链接
+   C-c C-l 按照提示输入即可:
+
+  [[http://www.google.com][google]]
+
+** 插入表格
+
+   输入
+   #+BEGIN_SRC text
+    | Name  | Phone | Age |
+    |-------+-------+-----|
+    | Peter |  1234 |  17 |
+    | Anna  |  4321 |  25 |
+
+   #+END_SRC
+
+   会被渲染为 (按 TAB 即可自动对齐)：
+
+    | Name  | Phone | Age |
+    |-------+-------+-----|
+    | Peter |  1234 |  17 |
+    | Anna  |  4321 |  25 |
