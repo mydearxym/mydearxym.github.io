@@ -1,0 +1,44 @@
+#+TITLE: 使用 git hooks 自动化部署
+#+DATE: <2016-05-09 15:33:29>
+#+TAGS: git
+#+CATEGORIES: 工具链, spacemacs
+
+
+
+{% fi /images/2016.05.09.22.16.newLogo.png %}
+
+
+开始之前，先给 spacemacs 换个 new logo
+
+
+
+需求很简单，就是在本地 git push 之后服务器端能够自动更新、而不是手动登陆以后 git pull。。。
+但在浪费了一上午时间，看了无数像猪大肠一样绕来绕去的中文教程以后，哥真的是无语了。
+
+其实是很简单的东西:
+
+[[https://www.digitalocean.com/community/tutorials/how-to-use-git-hooks-to-automate-development-and-deployment-tasks][  参考文章]]
+
+
+* 使用 git hooks 远程部署项目
+
+
+** 服务器端
+   远程仓库建立 bare 仓库: git init --bare  XXX
+   在该仓库中 XXX/hooks 目录中添加  post-receive 文件，并给予执行权限 chmod +x XXX/hooks/post-receive
+
+   #+BEGIN_SRC bash
+   #!/bin/bash
+   echo 'post hooks!!!'
+   git --work-tree=/tmp/gittest --git-dir=/root/gittest checkout -f
+   #+END_SRC
+
+   上面其中的 */tmp/gittest* 只是一个普通目录, 不是 git 仓库
+
+
+** 本地
+   添加一个 remote 仓库, 指向服务器的 bare 仓库
+
+   #+BEGIN_SRC bash
+   git remote add production root@mzliaoba.com:gittest
+   #+END_SRC

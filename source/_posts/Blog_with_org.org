@@ -4,7 +4,6 @@
 #+CATEGORIES: 工具链
 
 
-
 * 安装配置
 
   1. 首先安装[[https://hexo.io/zh-cn/][ Hexo 博客框架]] ,  再挑选一款你喜欢的 [[http://theme-next.iissnan.com/getting-started.html][主题（这里用的是 Next）]]

@@ -1,0 +1,72 @@
+#+TITLE: 在 spacemacs 中使用 git
+#+DATE: <2016-04-28 21:09:20>
+#+TAGS: git, spacemacs
+#+CATEGORIES: 工具链, spacemacs
+
+
+
+* 基本使用
+
+
+
+
+
+** 查看状态
+   *SPC g s* 查看当前项目的 git 状态, 分为
+
+   {% fi /images/2016.05.06.12.55.gitStatus.png %}
+
+#+BEGIN_HTML
+<!--more-->
+#+END_HTML
+
+
+*** Untracked files
+
+    s 将该文件加入 unStage files 列表即 unstage 区，相当于命令行上的 git add [filename]。
+    x 忽略该文件修改。
+    TAB 查看 diff
+    q 返回
+
+*** Unstaged files
+    u 撤销，即将该文件撤回到 Untracked 区。
+    TAB 查看 diff
+    q 返回
+
+*** Commit
+    c c 可将 Unstaged files 中的文件提交到 commit 区
+    其他操作待续。。
+
+*** 时光机 timemachne
+    注意该功能无法在 unTracked file 中使用
+    *SPC g t* 进入时光机
+    n 向后一个版本
+    p 向前一个版本
+    Y 拷贝当前版本的 git hash 值
+    q 退出
+
+*** blame
+    *SPC g b* 进入, 可以查看当前文件的每一次提交记录的信息。
+
+
+
+** 让单个文件回到某个版本
+
+   先用 *SPC g t* 启动 git-timemachine 找到正确的版本，然后按 *Y* 复制 hash 值，最后 checkout 出来
+   注意: 这个命令不在 SPC g 的快捷键组里面，之前有些教程里的 # 键现在也取消了。
+
+   #+BEGIN_SRC bash
+   M-x magit-checkout-file
+   #+END_SRC
+
+** 提交部分修改
+
+   按 *v* 选中想提交的行，然后可以:
+
+   1. 按 *s* stage 所选区域.
+   2. 按 *u* 可以 unstage 所选区域.
+   3. 按 *x* 可以 discard 所选区域.
+
+   这对于修改大文件或者改动多的文件时【特别有用】。
+
+   {% fi /images/2016.04.28.21.31.gitCommitSomeLint.png %}
