@@ -1,7 +1,7 @@
 #+TITLE: 使用 git hooks 自动化部署
 #+DATE: <2016-05-09 15:33:29>
 #+TAGS: git
-#+CATEGORIES: 工具链, spacemacs
+#+CATEGORIES: 工具链,Emacs
 
 
 
@@ -11,25 +11,86 @@
 开始之前，先给 spacemacs 换个 new logo
 
 
-
 需求很简单，就是在本地 git push 之后服务器端能够自动更新、而不是手动登陆以后 git pull。。。
 但在浪费了一上午时间，看了无数像猪大肠一样绕来绕去的中文教程以后，哥真的是无语了。
+
+#+BEGIN_HTML
+<!--more-->
+#+END_HTML
 
 其实是很简单的东西:
 
 [[https://www.digitalocean.com/community/tutorials/how-to-use-git-hooks-to-automate-development-and-deployment-tasks][  参考文章]]
 
 
-* 使用 git hooks 远程部署项目
+* 基本原理
+** TODO 看图说话
+
+** 什么是 bare 仓库
+  所谓的 *bare* 仓库，就是在初始化 git 仓库的时候加上一个 --bare 选项，即 *git init --bare* ，它生成的目录结构
+  类似于:
+
+  #+BEGIN_SRC bash
+  # tree -L 1
+  .
+  ├── branches
+  ├── config
+  ├── description
+  ├── HEAD
+  ├── hooks
+  ├── index
+  ├── info
+  ├── objects
+  └── refs
+
+  5 directories, 4 files
+  #+END_SRC
+
+  很像普通 git 仓库的 .git 目录里的内容，但又又有几个不同的地方：
+  1. 它不是隐藏目录.
+  2. 它不包含具体的项目文件，只有仓库基本的的 git 信息.
+
+** git hooks
+  git hooks 是 git 仓库的一种事件驱动的钩子机制，在你对该仓库执行某些操作时触发相应的 bash 脚本。脚本都位于
+  hooks 目录下：
+
+  #+BEGIN_SRC bash
+  # ls hooks/
+  applypatch-msg.sample  post-receive        pre-applypatch.sample  prepare-commit-msg.sample  pre-rebase.sample
+  commit-msg.sample      post-update.sample  pre-commit.sample      pre-push.sample            update.sample
+  #+END_SRC
+
+  现在只需要将需要执行的逻辑写入相对应的 hooks 目录下的脚本中即可。
+
+ | 钩子名称           | 触发条件                         | 说明                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+ |--------------------+----------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+ | applypatch-msg     | git am                           | Can edit the commit message file and is often used to verify or actively format a patch's message to a project's standards. A non-zero exit status aborts the commit.                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+ | pre-applypatch     | git am                           | This is actually called after the patch is applied, but before the changes are committed. Exiting with a non-zero status will leave the changes in an uncommitted state. Can be used to check the state of the tree before actually committing the changes.                                                                                                                                                                                                                                                                                                                                                                           |
+ | post-applypatch	  | git am                           | 	This hook is run after the patch is applied and committed. Because of this, it cannot abort the process, and is mainly used for creating notifications.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+ | pre-commit         | git commit	                     | This hook is called before obtaining the proposed commit message. Exiting with anything other than zero will abort the commit. It is used to check the commit itself (rather than the message).                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+ | prepare-commit-msg | git commit	                     | Called after receiving the default commit message, just prior to firing up the commit message editor. A non-zero exit aborts the commit. This is used to edit the message in a way that cannot be suppressed.	(1 to 3) Name of the file with the commit message, the source of the commit message (message, template, merge, squash, or commit), and the commit SHA-1 (when operating on an existing commit).                                                                                                                                                                                                                        |
+ | commit-msg         | git commit	                     | Can be used to adjust the message after it has been edited in order to ensure conformity to a standard or to reject based on any criteria. It can abort the commit if it exits with a non-zero value.	(1) The file that holds the proposed message.                                                                                                                                                                                                                                                                                                                                                                                  |
+ | post-commit	      | git commit	                     | Called after the actual commit is made. Because of this, it cannot disrupt the commit. It is mainly used to allow notifications.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+ | pre-rebase	        | git rebase	                     | Called when rebasing a branch. Mainly used to halt the rebase if it is not desirable.	(1 or 2) The upstream from where it was forked, the branch being rebased (not set when rebasing current)                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+ | post-checkout	    | git checkout and git clone	     | Run when a checkout is called after updating the worktree or after git clone. It is mainly used to verify conditions, display differences, and configure the environment if necessary.	(3) Ref of the previous HEAD, ref of the new HEAD, flag indicating whether it was a branch checkout (1) or a file checkout (0)                                                                                                                                                                                                                                                                                                                |
+ | post-merge	        | git merge or git pull	           | Called after a merge. Because of this, it cannot abort a merge. Can be used to save or apply permissions or other kinds of data that git does not handle.	(1) Flag indicating whether the merge was a squash.                                                                                                                                                                                                                                                                                                                                                                                                                        |
+ | pre-push	          | git push	                       | Called prior to a push to a remote. In addition to the parameters, additional information, separated by a space is passed in through stdin in the form of "<local ref> <local sha1> <remote ref> <remote sha1>". Parsing the input can get you additional information that you can use to check. For instance, if the local sha1 is 40 zeros long, the push is a delete and if the remote sha1 is 40 zeros, it is a new branch. This can be used to do many comparisons of the pushed ref to what is currently there. A non-zero exit status aborts the push.	(2) Name of the destination remote, location of the destination remote |
+ | pre-receive	      | git-receive-pack                 | on the remote repo	This is called on the remote repo just before updating the pushed refs. A non-zero status will abort the process. Although it receives no parameters, it is passed a string through stdin in the form of "<old-value> <new-value> <ref-name>" for each ref.                                                                                                                                                                                                                                                                                                                                                       |
+ | update	            | git-receive-pack                 | on the remote repo	This is run on the remote repo once for each ref being pushed instead of once for each push. A non-zero status will abort the process. This can be used to make sure all commits are only fast-forward, for instance.	(3) The name of the ref being updated, the old object name, the new object name                                                                                                                                                                                                                                                                                                            |
+ | post-receive	      | git-receive-pack                 | on the remote repo	This is run on the remote when pushing after the all refs have been updated. It does not take parameters, but receives info through stdin in the form of "<old-value> <new-value> <ref-name>". Because it is called after the updates, it cannot abort the process.                                                                                                                                                                                                                                                                                                                                               |
+ | post-update	      | git-receive-pack                 | on the remote repo	This is run only once after all of the refs have been pushed. It is similar to the post-receive hook in that regard, but does not receive the old or new values. It is used mostly to implement notifications for the pushed refs.	(?) A parameter for each of the pushed refs containing its name                                                                                                                                                                                                                                                                                                               |
+ | pre-auto-gc	      | git gc --auto	                   | Is used to do some checks before automatically cleaning repos.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+ | post-rewrite	      | git commit --amend, git-rebase	 | This is called when git commands are rewriting already committed data. In addition to the parameters, it receives strings in stdin in the form of "<old-sha1> <new-sha1>".	(1) Name of the command that invoked it (amend or rebase)                                                                                                                                                                                                                                                                                                                                                                                                 |
 
 
+* 具体操作
 ** 服务器端
    远程仓库建立 bare 仓库: git init --bare  XXX
    在该仓库中 XXX/hooks 目录中添加  post-receive 文件，并给予执行权限 chmod +x XXX/hooks/post-receive
 
    #+BEGIN_SRC bash
    #!/bin/bash
-   echo 'post hooks!!!'
+   echo 'exec remote git hooks ...'
    git --work-tree=/tmp/gittest --git-dir=/root/gittest checkout -f
    #+END_SRC
 

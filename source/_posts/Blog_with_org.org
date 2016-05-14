@@ -1,7 +1,7 @@
 #+TITLE: 使用 Emacs 的 org-mode 写博客
 #+DATE: <2016-04-25 20:57:32>
 #+TAGS: Hexo,  Emacs, org
-#+CATEGORIES: 工具链
+#+CATEGORIES: 工具链, Emacs
 
 
 * 安装配置
@@ -16,8 +16,11 @@
   npm install hexo-deployer-git--save
   #+END_SRC
 
-  4. 安装[[https://github.com/CodeFalling/hexo-renderer-org][ hexo 的 org 插件]] , 默认使用 org 而不是 markdown。
+#+BEGIN_HTML
+<!--more-->
+#+END_HTML
 
+  4. 安装[[https://github.com/CodeFalling/hexo-renderer-org][ hexo 的 org 插件]] , 默认使用 org 而不是 markdown。
 
 
   *可能出现的错误*:
@@ -26,11 +29,6 @@
   2. 如果你整个站点只有一篇文章，那么 <!--more--> 标签或 hexo 默认自带的截断标签是不起作用的，默认会显示全文。
   3. 默认不需要提交 commit message,  hexo 会自动将 message 填写为 update ..datetime... 的形式。
   4. Hexo 底层使用 highlight.js  在某些语法尤其是 *--*,  表格等 上会导致 hexo generate 卡死。
-
-
-#+BEGIN_HTML
-<!--more-->
-#+END_HTML
 
 
 * 关于使用
@@ -65,6 +63,34 @@
    <s Tab
    #+END_SRC
 
+** 插入列表
+*** 有序列表
+    #+BEGIN_SRC bash
+    1. list 1
+    2. list 2
+    3. list 3
+    #+END_SRC
+
+    第一条列表编辑完后，按 *o* 到编辑第二条列表时，抬头序号会自动递增（删除则会递减）
+    另外渲染出的有序列表第一条缩进有 bug , 这是 org-html 插件的问题， org 本身没有问题。
+
+    1. list 1
+    2. list 2
+    3. list 3
+
+
+*** 无序列表
+    #+BEGIN_SRC bash
+    - list 1
+    - list 2
+    - list 3
+    #+END_SRC
+
+    按 *o* 跳转编辑第二条列表时，抬头同样会自动添加
+
+    - list 1
+    - list 2
+    - list 3
 
 ** 插入截图
 
