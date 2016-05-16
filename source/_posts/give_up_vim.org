@@ -1,0 +1,6 @@
+#+TITLE: 放弃 vim
+#+DATE: <2015-11-16 11:50:24>
+#+TAGS: vim
+#+CATEGORIES: vim
+
+放弃 vim

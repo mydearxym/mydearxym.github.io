@@ -3,8 +3,6 @@
 #+TAGS: elisp
 #+CATEGORIES: Emacs
 
-[[http://steve-yegge.blogspot.com/2008/01/emergency-elisp.html][原文参见这里]] , 我加入了一些注解方便自己的理解 (包括一些错别字的修改, 失效图片的补充等)。
-
 你用着 Emacs 却不懂 Lisp 吧？欢迎阅读这篇 Emacs Lisp 入门教程！它应该能够助你搞定 Emacs Lisp，从而更加自如的驾驭 Emacs。
 
 #+BEGIN_HTML
@@ -517,7 +515,6 @@ Emacs 22+ 提供了一个叫做 calc 的大整数/数学库，以备不时之需
    #+END_SRC
 
 
-
 ** 类
    Emacs Lisp 不是标准意义上的面向对象编程语言，它没有类、继承以及多态等语法。Emacs 的 Common Lisp 包（现在的 cl-lib）提供了一个有用的特性 defstruct，通过它可以实现简单的 OOP 支持。下面我会给出一个简单的示例。
 
@@ -541,7 +538,7 @@ Emacs 22+ 提供了一个叫做 calc 的大整数/数学库，以备不时之需
 
    Java 在对象构造器方面可能挺糟糕，不过 Emacs 在域（类成员）的设置方面挺糟糕。要设置类（结构体）的域，必须使用 setf 函数，然后将类名作为域名的前缀：
 
-   todo: 差一个图
+   {% fi /images/2016.05.15.10.30.elispIntroClass.png %}
 
    这样看上去，Lisp 并不是太糟糕，但是在实践中（因为 Emacs Lisp 不支持命名空间，并且也没有 with-slots 宏），你会被卷入很长的类名与域名中的，例如：
    #+BEGIN_SRC emacs-lisp
@@ -588,3 +585,9 @@ Emacs 22+ 提供了一个叫做 calc 的大整数/数学库，以备不时之需
   可以告诉我你希望我的下一篇文档要写什么。有兴趣的化，我会再继续这个 Emergency Elisp 系列。
 
   Good Luck！
+
+
+
+
+
+[[http://steve-yegge.blogspot.com/2008/01/emergency-elisp.html][原文参见这里]] , 我加入了一些注解方便自己的理解 (包括一些错别字的修改, 失效图片的补充等)。
