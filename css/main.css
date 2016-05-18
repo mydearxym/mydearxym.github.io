@@ -468,8 +468,20 @@ body {
 h2 {
   color: #a37abb;
 }
+h2:before {
+  content: "⛅";
+  color: #a6b662;
+  margin-right: 5px;
+  margin-left: -21px;
+}
 h3:before {
-  content: "#";
+  content: "☃";
+  color: #a6b662;
+  margin-right: 5px;
+  margin-left: -21px;
+}
+h4:before {
+  content: "✨";
   color: #a6b662;
   margin-right: 5px;
 }
@@ -1524,7 +1536,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #a1ff05;
+  background: #0ea8ff;
 }
 .links-of-blogroll {
   font-size: 13px;
