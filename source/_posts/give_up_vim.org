@@ -3,4 +3,26 @@
 #+TAGS: vim
 #+CATEGORIES: vim
 
-放弃 vim
+
+自从 webstorm 转回到 vim 后，哥对于 vim 的某些方面是越来越无法忍受了，这里列举一些，闲时再补充。
+
+
+** 错误检查会卡住，非异步
+   vim 中错误检查普遍使用 [[https://github.com/scrooloose/syntastic][Syntastic 插件]] , 很聪明的调用各自语言的语法检查工具，比如 javascript 可以使用
+   eslint 等。 但是这货不是异步的 *X3* ... 也就是说你每次运行完 :SyntasticCheck 后，整个 vim 就卡住了
+   啊啊啊！默认还是文件内容改变就调用 SyntasticCheck， 改成 save 文件触发后一样很卡啊啊啊啊! 最蛋疼的是
+   这个问题是无解的 [[https://github.com/scrooloose/syntastic/pull/370][比如这里]] ，貌似未来 vim 8 会有异步的执行机制。 可是 vim 8 .... 去 die 吧
+
+   {% fi /images/2016.05.16.18.03.vim1.png %}
+
+** 语法高亮间歇性失灵
+   为了高亮 *react* 代码，哥放弃了和媳妇亲热的时间，披星戴月的找了各种插件，终于让 react 代码有了点人样：
+
+   {% fi /images/2016.05.16.18.13.vim2.png %}
+
+   什么 *this* 啦， *state* 啦，都给你高亮了，很贴心有木有! 可是，可是又来了，这种高亮使用个一段就会失灵
+   啊啊啊！尼玛，你猜哥是怎么解决的，保存当前 session，重新打开。。这特么得有多蛋疼啊！
+
+** nerdTree 乱跳
+   冲文件转到 nerdTree 之后在回到当前编辑的文件，经常不知道调转到到什么位置去了，狗眼看花了不说，思路经常就
+   这么乱了。

@@ -1,7 +1,7 @@
 #+TITLE: [译] Emacs Lisp 速成
 #+DATE: <2016-05-12 19:55:56>
 #+TAGS: elisp
-#+CATEGORIES: Emacs
+#+CATEGORIES: 工具链, Emacs
 
 你用着 Emacs 却不懂 Lisp 吧？欢迎阅读这篇 Emacs Lisp 入门教程！它应该能够助你搞定 Emacs Lisp，从而更加自如的驾驭 Emacs。
 
