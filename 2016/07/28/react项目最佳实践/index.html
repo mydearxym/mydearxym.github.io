@@ -1,0 +1,840 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <!-- link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css" -->
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="react,前端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="js &amp;#x90E8;&amp;#x5206;
+
+
+bla
+
+
+
+
+
+
+css &amp;#x90E8;&amp;#x5206;
+
+
+css-modules
+
+
+bla bla
+
+
+
+
+theme &amp;#x673A;&amp;#x5236;
+
+
+bla bla
+
+
+
+
+
+
+&amp;#x8DEF;&amp;#x7531;
+
+
+react-router
+
+
+
+
+
+&amp;#x6D4B;&amp;#x8BD5;
+
+
+&amp;#x8BBE;&amp;#x7F6E;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react项目最佳实践">
+<meta property="og:url" content="http://yoursite.com/2016/07/28/react项目最佳实践/index.html">
+<meta property="og:site_name" content="Mydearxym">
+<meta property="og:description" content="js &amp;#x90E8;&amp;#x5206;
+
+
+bla
+
+
+
+
+
+
+css &amp;#x90E8;&amp;#x5206;
+
+
+css-modules
+
+
+bla bla
+
+
+
+
+theme &amp;#x673A;&amp;#x5236;
+
+
+bla bla
+
+
+
+
+
+
+&amp;#x8DEF;&amp;#x7531;
+
+
+react-router
+
+
+
+
+
+&amp;#x6D4B;&amp;#x8BD5;
+
+
+&amp;#x8BBE;&amp;#x7F6E;">
+<meta property="og:updated_time" content="2016-07-29T04:54:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react项目最佳实践">
+<meta name="twitter:description" content="js &amp;#x90E8;&amp;#x5206;
+
+
+bla
+
+
+
+
+
+
+css &amp;#x90E8;&amp;#x5206;
+
+
+css-modules
+
+
+bla bla
+
+
+
+
+theme &amp;#x673A;&amp;#x5236;
+
+
+bla bla
+
+
+
+
+
+
+&amp;#x8DEF;&amp;#x7531;
+
+
+react-router
+
+
+
+
+
+&amp;#x6D4B;&amp;#x8BD5;
+
+
+&amp;#x8BBE;&amp;#x7F6E;">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> react项目最佳实践 | Mydearxym </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mydearxym</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">谢一命的 Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                react项目最佳实践
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-28T15:35:33+08:00" content="2016-07-28">
+              2016-07-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/react/" itemprop="url" rel="index">
+                    <span itemprop="name">react</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+
+
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">js &#x90E8;&#x5206;</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+bla
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">css &#x90E8;&#x5206;</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">css-modules</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+bla bla
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">theme &#x673A;&#x5236;</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+bla bla
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">&#x8DEF;&#x7531;</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+react-router
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">&#x6D4B;&#x8BD5;</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-0-1" class="outline-4">
+<h4 id="sec-4-0-1">&#x8BBE;&#x7F6E;</h4>
+<div class="outline-text-4" id="text-4-0-1">
+<p>
+&#x73B0;&#x5728;&#x9879;&#x76EE;&#x91CC;&#x9762;&#x6211;&#x5427; lint:css &#x90E8;&#x5206;&#x53BB;&#x6389;&#x4E86;, &#x6709;&#x51E0;&#x4E2A;&#x539F;&#x56E0;&#xFF1A;
+</p>
+<ul class="org-ul">
+<li>&#x6211;&#x4F7F;&#x7528;&#x7684;&#x7F16;&#x8F91;&#x5668; Emacs &#x7684;&#x4EE3;&#x7801;&#x68C0;&#x67E5;&#x5DE5;&#x5177; flycheck &#x76EE;&#x524D;&#x4E0D;&#x652F;&#x6301; stylelint, <a href="https://github.com/flycheck/flycheck/pull/903" target="_blank" rel="external">&#x8BE6;&#x89C1;&#x8FD9;&#x4E2A; issue</a> , &#x5E76;&#x4E14;
+&#x76EE;&#x524D;&#x9879;&#x76EE;&#x7684;&#x4F7F;&#x7528; stylelint &#x662F;&#x4EE5; babel &#x63D2;&#x4EF6;&#x800C;&#x4E0D;&#x662F; npm cli &#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5982;&#x679C;&#x786C;&#x8981;&#x8BA9;emacs&#x652F;&#x6301;&#x8FD8;&#x8981;&#x5355;&#x72EC;
+&#x5B89;&#x88C5;&#x4E00;&#x4E2A; stylelint&#x3002;&#x66F4;&#x9EBB;&#x70E6;&#x3002;
+</li>
+<li>&#x76EE;&#x524D;&#x4F7F;&#x7528;&#x7684; css-module &#x7684;&#x65B9;&#x6848;&#xFF0C;&#x57FA;&#x672C;&#x90FD;&#x7EC4;&#x4EF6;&#x5316;&#x4E86;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x975E;&#x5F97;&#x7528; stylelint &#x53BB;&#x68C0;&#x67E5; css &#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x9519;&#x8BEF;&#xFF1F;
+&#x6211;&#x4E2A;&#x4EBA;&#x8BA4;&#x4E3A;&#x4E0D;&#x662F;&#x5F88;&#x5FC5;&#x8981;&#x3002;
+</li>
+<li>&#x6700;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x975E;&#x8981;&#x4F7F;&#x7528;&#xFF0C;&#x5728;&#x9879;&#x76EE;&#x7684; package.json &#x4E2D;36&#x884C;&#x5DE6;&#x53F3;&#x5C06;
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;lint&quot;</span>: <span class="string">&quot;npm run lint:js&quot;</span>,</span><br></pre></td></tr></table></figure>
+</div>
+<p>
+&#x6539;&#x4E3A;&#x5982;&#x4E0B;&#x5373;&#x53EF;&#xFF1A;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;lint&quot;</span>: <span class="string">&quot;npm run lint:js &amp;&amp; npm run lint:css&quot;</span>,</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-0-2" class="outline-4">
+<h4 id="sec-4-0-2">react &#x7EC4;&#x4EF6;&#x6D4B;&#x8BD5;</h4>
+<div class="outline-text-4" id="text-4-0-2">
+<p>
+&#x76EE;&#x524D;&#x4F7F;&#x7528;&#x7684;&#x662F;<a href="https://github.com/airbnb/enzyme" target="_blank" rel="external"> enzyme</a> &#x914D;&#x5408; <a href="https://github.com/mjackson/expect" target="_blank" rel="external">expect</a> (expect &#x5E93;&#x6709;&#x597D;&#x51E0;&#x4E2A;) &#x4EE5;&#x53CA; <a href="https://github.com/algolia/expect-jsx" target="_blank" rel="external">expect-jsx</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-0-3" class="outline-4">
+<h4 id="sec-4-0-3">&#x4F7F;&#x7528; travis &#x6301;&#x7EED;&#x96C6;&#x6210;</h4>
+<div class="outline-text-4" id="text-4-0-3">
+<p>
+&#x9879;&#x76EE;&#x81EA;&#x5E26;&#x4E86; travis.yml &#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-0-4" class="outline-4">
+<h4 id="sec-4-0-4">&#x81EA;&#x52A8; watch node &#x4F9D;&#x8D56;&#x7684;&#x7248;&#x672C;&#x53F7;</h4>
+<div class="outline-text-4" id="text-4-0-4">
+<p>
+<a href="https://david-dm.org/" target="_blank" rel="external">david-dm</a> &#x8BBE;&#x7F6E;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x7A0D;&#x540E;&#x66F4;&#x65B0;
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-0-5" class="outline-4">
+<h4 id="sec-4-0-5">&#x6D4B;&#x8BD5;&#x8986;&#x76D6;&#x7387;</h4>
+<div class="outline-text-4" id="text-4-0-5">
+<p>
+&#x5C06;&#x9879;&#x76EE;&#x5BFC;&#x5165;&#x4F7F;&#x7528; <a href="https://coveralls.io/" target="_blank" rel="external">coveralls</a> &#x5373;&#x53EF;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x8986;&#x76D6;&#x7387;&#x6D4B;&#x8BD5;&#x3002;
+</p>
+
+<p>
+npm run pretest &#x5148;&#x5427; lint:js &#x548C; lint:eslint &#x8DD1;&#x4E00;&#x904D;&#xFF0C;&#x4E3A;&#x540E;&#x6765;&#x7684;&#x6A21;&#x5757;&#x6D4B;&#x8BD5;&#x505A;&#x597D;&#x51C6;&#x5907;
+bla
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">&#x5F00;&#x53D1;</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+&#x5F00;&#x53D1;&#x65F6;&#x7684; dev &#x6A21;&#x5F0F;&#x4E0B;&#x4F1A;&#x770B;&#x5230; warning &#xFF0C; &#x4E0D;&#x7528;&#x7406;&#x4F1A;&#xFF0C; production &#x4E0B;&#x4F1A;&#x542F;&#x52A8; offline-plugin for webpack: <a href="https://github.com/NekR/offline-plugin" target="_blank" rel="external">https://github.com/NekR/offline-plugin</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">&#x9879;&#x76EE;&#x90E8;&#x7F72;</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+bla
+</p>
+</div>
+</div>
+
+<div></div>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag">#react</a>
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/16/Reactive-GraphQL-Architecture/" rel="next" title="响应式 GraphQL 架构">
+                <i class="fa fa-chevron-left"></i> 响应式 GraphQL 架构
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/29/ActiveRecord和Ecto的联系与对立/" rel="prev" title="ActiveRecord和Ecto的联系与对立">
+                ActiveRecord和Ecto的联系与对立 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="老谢后的花园" />
+          <p class="site-author-name" itemprop="name">老谢后的花园</p>
+          <p class="site-description motion-element" itemprop="description">人一旦被信任，就会愿意用更多的尊严来加倍回报信任。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mydearxym" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/mydearxym" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-1"><span class="nav-text">js 部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-2"><span class="nav-text">css 部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-2-1"><span class="nav-text">css-modules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-2-2"><span class="nav-text">theme 机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-3"><span class="nav-text">路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-4"><span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#sec-4-0-1"><span class="nav-text">设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sec-4-0-2"><span class="nav-text">react 组件测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sec-4-0-3"><span class="nav-text">使用 travis 持续集成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sec-4-0-4"><span class="nav-text">自动 watch node 依赖的版本号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sec-4-0-5"><span class="nav-text">测试覆盖率</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-5"><span class="nav-text">开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-6"><span class="nav-text">项目部署</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">老谢后的花园</span>
+</div>
+
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/vendors/jquery-scrollintoview/jquery.scrollintoview.min.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
