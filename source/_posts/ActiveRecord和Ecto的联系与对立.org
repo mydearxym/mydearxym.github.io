@@ -1,0 +1,304 @@
+#+TITLE: ActiveRecord和Ecto的联系与对立
+#+DATE: <2016-07-29 17:44:57>
+#+TAGS: Elixir, Ecto
+#+CATEGORIES: Elixir,Ecto
+
+
+本文转自英语流利说官方技术微信公众号
+
+ActiveRecord 是 Ruby on Rails 的 Model 层，是一个 ORM(Object-relational mapping)。Ecto 是 Elixir 实现
+的一个库，类似于 ORM。不管是不是 ORM，二者本质上都是在各自的语言层面，对于数据库操作提供了抽象，能让我们更方便地
+和数据库交互，而不是直接通过 SQL 的方式，并且对表中的数据做了映射，从而方便进行后续逻辑的处理。
+
+这篇文章并不打算来争个孰优孰劣，很多时候对比的作用更是加深对于事物的认识。
+
+#+BEGIN_HTML
+<!--more-->
+#+END_HTML
+
+* 定义映射关系
+  我们一般会以表为单位来操作数据库，二者也对表这个概念做了映射。假定我们有一个 users 的表，那么它们的定义（这篇
+  文章的代码示范大多会使用这个模型）如下：
+
+  #+BEGIN_SRC ruby
+  # ActiveRecord
+  class User < ActiveRecord::Base
+  end
+  #+END_SRC
+
+  #+BEGIN_SRC elixir
+  # Ecto
+  defmodule User do
+    use Ecto.Schema
+
+    schema "users" do
+      field :email, :string
+    end
+  end
+  #+END_SRC
+
+  可以看到，ActiveRecord 更“智能”，通过继承了 ActiveRecord::Base 这个类，并且利用表名的转换约定（User 对应
+  复数形式的表名 users）来完成映射。而 Ecto 中则是通过 DSL 定义了 schema，很显然，表名以及字段的指定都是显式指定的。
+
+  从代码上看，ActiveRecord 更简洁，但只看这个代码却不知道表名、字段等信息，需要通过查看 db schema 的定义来
+  做进一步了解，而 Ecto 定义比较繁琐，但 schema 结构一目了然。
+
+* 数据存放和使用
+  让我们先跳过数据库操作，直接到数据被取出来之后的部分。我们来定义一个操作——把 email @ 前的部分提取出作为 name:
+
+  ActiveRecord:
+
+  #+BEGIN_SRC ruby
+  class User < ActiveRecord::Base
+    def name
+      email.split('@').first
+    end
+  end
+
+  irb> user = User.first
+       => #<User id: 1, email: "foo@example.com">
+  irb> user.name
+       => "foo"
+  #+END_SRC
+
+   Ecto:
+  #+BEGIN_SRC elixir
+    defmodule User do
+      def name(user)
+        user.email |> String.split("@") |> List.first
+      end
+    end
+
+    iex> user = Ecto.Repo.get_by User, id: 1
+         => %User{id: 1, email: "foo.example.com"}
+    iex> User.name(user)
+         => "foo"
+  #+END_SRC
+
+
+  与其说是 ActiveRecord 和 Ecto 的比较，不如说是 Ruby 和 Elixir，甚至是面向对象语言和函数式语言的比较。
+  ActiveRecord 的数据被存放到一个对象中，这个对象不光有数据，还有在类的定义中被赋予的行为，使用起来非常方
+  便。Ecto 的数据和行为是分开的，数据用 [[http://elixir-lang.org/getting-started/structs.html][struct]] （类似于 C 语言中的 struct），行为则是通过函数，使用起来需
+  要写的代码更多。
+
+  关于面向对象语言和函数式语言的比较网上已经有很多了，这里我仅仅从测试的角度来做进一步的对比：
+
+  ActiveRecord:
+  #+BEGIN_SRC ruby
+  user = User.new(email: "foo@example.com") # prepare data
+  assert user.name == "foo"
+  #+END_SRC
+
+  Ecto:
+  #+BEGIN_SRC elixir
+  user = %User{email: "foo@example.com"} # prepare data
+  assert User.name(user) == "foo"
+  #+END_SRC
+
+  乍一看，它们可能没有什么区别，但在准备数据的第一行却完全是两种做法。因为 *User* 继承自 *ActiveRecord::Base* ，
+  它会帮我们用传入的 attributes 来进行初始化操作，当然我们也可以在 User 里自定义一些初始化行为。而 Ecto 中则只是
+  用了 Elixir 的 Struct 来构造我们需要的数据，而没有任何行为。
+
+  前者更灵活、强大，比如我们可以在初始化时给一些字段赋上默认值。但这种灵活也伴随着风险与不可靠，当我们在调用 *User.new*
+  时，其实我们不能确定得到的那个对象的 email 是否就是我们传入的，因为初始化代码里可以随意改变默认行为，并可能
+  产生其他不必要的副作用。正是因为这种不确定，使得我们的测试其实没有看上去那么容易写。
+
+  而后者完全没有副作用，我们不需要担心得到的结果会跟预期的不一致，测试从而更加可靠。当然损失了一些灵活性，
+  但很难说这到底是好还是坏，可能要在不同的场景下才能判断，也取决于不同人的喜好。
+
+  ActiveRecord 和 Ecto 都对关联关系做了抽象，其中也会体现出这些区别，我们会在之后的部分具体再讲。
+
+* 数据库查询
+  我们来做一个很简单的查询操作——取出 id 为 2 的用户：
+#+BEGIN_SRC ruby
+  # ActiveRecord
+  user = User.where(id: 2).first
+#+END_SRC
+
+#+BEGIN_SRC elixir
+  # ecto
+  user = Ecto.Repo.one(from u in User, where: u.id == 2)
+#+END_SRC
+
+  在 ActiveRecord 中，只涉及到 User 这一个 class 就可以完成全部的查询。而 Ecto 则涉及
+  到 *Ecto.Repo* 和 *Ecto.Query* （ *from* 是从 *Ecto.Query* 引入的宏定义） 和 *User* 。
+
+  ActiveRecord 的一个类就完成了 Ecto 三个 Module 才完成的工作——指定要查询的表、设定查
+  询条件和实际向数据库的查询，我们调用的时候只需要知道 User 这一个，非常方便。
+
+  Ecto.Repo 是对于一个数据库的映射，可以说，一个 Repo 就是对于一个数据库的连接，可以是
+  多个类型的数据库，比如 MySQL、PostgreSQL 甚至是 MongoDB，也可以是一个类型的多个数据
+  库。可以看到，相比于 ActiveRecord 这样所有 DB 操作耦合在一个 class 的做法，Ecto 则
+  显得更加灵活，因为查询条件和实际的查询操作、schema 定义和数据库连接是分开的。
+
+  可能很多人会觉得，还是 ActiveRecord 舒服，开始我也是这么觉得的，既然可以这么方便，为
+  什么要弄得这么复杂呢？直到我遇到了更复杂的场景，比如一个项目里需要有多个不同数据库连接
+  ，甚至是同一个 Model 需要连接多个数据库，或者读写分离的需求。这时，对于 ActiveRecord
+  ，我想到的唯一解决方案就是——Google，因为从来没这样用过啊，而 schema 和查询又是耦合的
+  ，所以我知道只能通过对 ActiveRecord 的定制才能达到目的，而搜索到的解决方案靠谱吗？不
+  确定，因为毕竟不是 ActiveRecord 擅长的应用场景。但对于 Ecto，自然就支持了，根本不用多想。
+
+  换个角度想，Ecto 真的复杂吗？看上去似乎是代码多了，每次实际查询都需要显式执行，而 ActiveRecord
+  则是当你调用特定方法时就会触发查询。但就像函数式语言一样，语法上的一些繁琐，反而带来了代码上的简洁。
+
+  当然，Ecto 也不是完美，在有些场景，ActiveRecord 更有优势，比如当需要把一个已经存在的
+  项目的 Model 完全换为另一个数据库时，ActiveRecord 中可能就是把一个 Model 的连接改一
+  下就行了，而 Ecto 似乎比较难以全局修改。
+
+* 查询语法
+  除此之外，二者的查询语法也各有千秋。ActiveRecord 定义了一系列比较语义化的方法，比如
+  *where* , *order* , *group*, *joins*, *select* 等，通过不断调用就能得到结果。
+  而 Ecto 则是定义了一套类似于 *LINQ* 的 DSL，能让我们像写 SQL 一样来写查询代码。
+
+  刚接触 ActiveRecord 的时候，觉得可以不写 SQL 实在是太爽了，甚至到现在也一直觉得
+  ActiveRecord 写起来很容易，就像 Ruby 语言一样优雅。但有时难免会碰到一些复杂的查询
+  ，比如涉及到 join，group，这时 ActiveRecord 写起来反而不是那么容易，很可能很容易
+  就想出了 SQL，但还是不会写 ActiveRecord 风格的代码。因为对于复杂的查询，代码到
+  SQL 的转换可能不那么显而易见，最终只能通过 Google 来找到答案或者是直接用 string 来写 SQL。
+
+  Ecto 是另外一种优雅，从代码到 SQL 的转变可以说是直接对应起来的，知道了 SQL 基本就
+  知道了代码怎么写，对于复杂查询可能更容易。比如文档里的这个例子，并不是很复杂，但已经
+  可以说明问题：
+  #+BEGIN_SRC elixir
+  from(p in Post,
+    group_by: p.category,
+    select: {p.category, count(p.id)})
+  #+END_SRC
+
+* 数据写操作
+  还是先来看一个例子——插入一条数据：
+  #+BEGIN_SRC ruby
+  # ActiveRecord
+  class User < ActiveRecord::Base
+    validates_presence_of :email
+  end
+
+  irb> User.create!(email: "foo@example.com")
+  #+END_SRC
+
+  #+BEGIN_SRC elixir
+  # Ecto
+  defmodule User do
+    import Ecto.Changeset
+    def changeset(user, params \\ %{}) do
+      user
+      |> cast(params, ~w(email))
+      |> validate_required([:email])
+    end
+  end
+
+  iex> changeset = User.changeset(%User{}, %{email: "foo@example.com"})
+  iex> Ecto.Repo.insert(changeset)
+  #+END_SRC
+
+* 数据验证
+  数据写操作其实与查询类似， *ActiveRecord* 全都通过 User 这个 class 完成插入，而 Ecto
+  则需要通过 User 和之前见过的 Ecto.Repo 来完成，数据组装和实际写入是分开的。这里更关注的
+  是写操作之外的，也就是数据验证等额外的操作，比如这里验证了 email 必须存在。ActiveRecord
+  是通过在类定义中调用方法来定义全局的 validations，当调用 *create* 或 *update* 等方法时
+  就会自动调用验证。而 Ecto 则是通过这个新的 *module Ecto.Changeset* 来进行数据验证等处理。
+
+  对于 ActiveRecord，因为定义是全局的，所以调用写操作时不需要去关心验证的逻辑，缺点就是灵活
+  性会受到限制，比如可能你需要在不同的场景下做不同的验证逻辑，像邮箱注册、手机注册、游客、第
+  三方注册，因为是全局的约束，就使得所有的逻辑混在一起，错综复杂。
+
+  而 *Ecto.Changeset* 的思路是，每一个 changeset 就是一条验证的流程，比如你可以定义
+  *email_signup_changeset* 、 *phone_signup_changeset* 、 *guest_changeset* 、 *oauth_changeset*
+  ，他们互相不受影响，整个逻辑很清晰。而且 changeset 可以互相组合，比如定义一个公共的 changeset
+  作为所有 changeset 的基础。当然，缺点就是调用的时候必须要显示指定一个 changeset，甚至可以
+  不通过 changeset，代码上会相对比较麻烦。
+
+* 回调
+  ActiveRecord 中可以定义在写操作整个流程中各个关键点的回调逻辑，比如在写入之前构造一些字段，
+  或是写入完之后做一些缓存、数据库的更新。
+
+  而 *Ecto 2.0* 之后就没有 callback 了，其实这是必然的，因为按 Ecto 的思路，schema 和
+  数据库操作是分开的，那就无法在 schema 中定义各种回调了。另外就是，你真的需要回调吗？全局
+  的回调不止带来了方便，也可能会引入了一些问题，因为这些自动触发的回调对开发者而言是隐藏的，
+  加一行回调很简单，但当你加了越来越多的回调时，代码也就失控了。关于 Ecto 的 callback，
+  可以看 José 写的[[http://blog.plataformatec.com.br/2015/12/ecto-v1-1-released-and-ecto-v2-0-plans/][ 这篇文章]] 。
+
+
+* 并联关系
+
+  我们不会只有一个表，很多时候数据库的操作需要涉及到多个表以及他们之间的关系，ActiveRecord
+  和 Ecto 也都对此做了抽象，比如 *one-one* 、 *one-many* 、 *many-to-many* 。
+
+  我们在 User 的基础上加入 posts 这个表（id, title, user_id）来做说明。二者的定义都大同小异：
+
+  #+BEGIN_SRC ruby
+  # ActiveRecord
+  class User < ActiveRecord::Base
+    has_many :posts
+  end
+
+  class Post < ActiveRecord::Base
+    belongs_to :user
+  end
+  #+END_SRC
+
+#+BEGIN_SRC elixir
+  # Ecto
+  defmodule User do
+    schema "users" do
+      has_many :posts, Post
+    end
+  end
+
+  defmodule Post do
+    schema "posts" do
+      field :title, :string
+      belongs_to :user, User
+    end
+  end
+#+END_SRC
+
+  但从使用开始就产生了区别：
+  #+BEGIN_SRC ruby
+  # ActiveRecord
+  irb> user = User.first
+       => #<User id: 1, email: "foo@example.com">
+  irb> user.posts # 发生了数据库查询
+       => [#<Post id: 1, title: "Post 1", user_id: 1>,
+           #<Post id: 2, title: "Post 2", user_id: 1>]
+  #+END_SRC
+
+  #+BEGIN_SRC elixir
+  # Ecto
+  iex> user = Ecto.Repo.get_by User, id: 1
+       =>  %User{id: 1, email: "foo.example.com", posts: #Ecto.Association.NotLoaded<association :posts is not loaded>}
+  iex> user.posts
+  #Ecto.Association.NotLoaded<association :posts is not loaded>
+  iex> user = Ecto.Repo.preload(user, :posts) # 发生了数据库查询
+  iex> user.posts
+       => [%Post{id: 1, title: "Post 1", user_id: 1},
+          %Post{id: 2, title: "Post 2", user_id: 2}]
+  #+END_SRC
+
+ 可以看到，ActiveRecord 依旧延续自己的风格，user.posts 这个方法调用会产生一个
+ *ActiveRecord_Associations_CollectionProxy* 的对象，当使用时就会 自动做数据库查询。
+
+ 而对于 Ecto，user.posts 不是方法调用，只是取了 Struct 的一个值，它在 user 被取出来后就
+ 存在于 struct 中，它本身又是一个 *Struct Ecto.Association.NotLoaded* 。正如这个名字
+ 暗示，posts 还没有被从数据库中加载出来，一直到我们显示通过 *preload* 调用之后。
+
+ Ecto 这样做的目的是什么呢？ 或许我们可以看看 ActiveRecord 这种做法有什么不好，
+ 数据库查询就像方法调用一样简单，所以在你不经意的时候，就产生了数据库查询，会进一步拖慢我们的
+ 程序。而 Rails 中经常发生的 n+1 的查询问题，真的是开发者能力不够，总是忘记这个性能问题吗？
+ 并不完全是，当你在 view 里随便调用一个方法就做了查询时，其实很多时候你是比较难意识到的，
+ 可以说 ActiveRecord 的这种方便，使得代码更容易产生性能问题。
+
+ 而 Ecto 从一开始就试图去减少这种问题，当一个 Ecto.Association.NotLoaded 被使用时会直接
+ 报错，Ecto 通过强制、显式的关联查询，让开发者更能意识到代码产生的影响。当然你也可以在 view
+ 的循环体内去通过 Repo.preload 来查询，但这时你应该是知道你在做什么的。好的框架或者库可以帮
+ 你减少错误的发送，但却不能完全避免。
+
+* 总结
+
+  ActiveRecord 和 Ecto 很像，甚至 Ecto 从 ActiveRecord 借鉴了很多，但通过比较后，大家应该
+  可以发现，二者其实是对于同一问题的两种风格迥异的解决方案。ActiveRecord 简便、强大，帮你做了
+  很多事情，但缺点也是帮你做了一些可能不该做的事情。Ecto 因为在 ActiveRecord 之后才产生，所以
+  除了借鉴，还在 ActiveRecord 做的不够好的地方做了改善，更透明、更有约束力，松耦合，但有些地方
+  相对更繁琐。
+
+  可能我的一些理解还不到位，所以有失偏颇，欢迎和大家一起交流、指正。

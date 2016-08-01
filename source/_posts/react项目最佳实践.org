@@ -1,0 +1,129 @@
+#+TITLE: react项目最佳实践
+#+DATE: <2016-07-28 15:35:33>
+#+TAGS: react, 前端
+#+CATEGORIES: react
+
+项目地址 [[https://github.com/mydearxym/coder_club_frontend][这里]], 基于 [[https://github.com/mxstbr/react-boilerplate][react-boilpate]]
+
+* js 部分
+** 概述
+    js 部分主要使用到的技术是 React, Redux, Redux-saga, react-router, ImmutableJS, reselect,以及相对应的 es6语
+    法等等。单独看每一个，并不难，但是由于其中概念比较新, 需要你知道这每一个技术在整个 react 项目中所扮演的角
+    色，以及解决的问题，所以理解起来还是需要花费一些时间和功夫的。
+
+    另外和其他主流的 web 框架相比，react 采用了完全不同的扩展思路, 其他的框架： Angular, Ember, Backbone, Vue
+    等等都是采用了在 html 中扩展 js 的做法， 延续了 MVC 构, 而 react 借鉴了某些游戏开发的思路和很多函数式编程
+    手段，使用 virtual-dom 和 flux 架构实现了数据的单向清晰的流向，jsx 和 es6 更是让编写组件化的 js 程序充满乐
+    趣。
+
+    react 技术圈已经渐渐成熟，在 web , iOS, android , 甚至跨平台桌面端都有亮眼的表现，是绝对值得投资和能解放生产
+    力的技术。 社区经过多年的活跃发展，各种教程都比较齐全，上面提到的技术都有相应的中文版（中英文版建议都看几遍）：
+    [[http://reactjs.cn/][react中文站]] , [[http://cn.redux.js.org/][redux 中文文档]] ,[[https://react-guide.github.io/react-router-cn/][ react-router 中文文档]] , [[http://leonshi.com/redux-saga-in-chinese/][redux-saga 中文文档]], [[http://es6.ruanyifeng.com/][es6 语法学习]] 等等。
+
+#+BEGIN_HTML
+<!--more-->
+#+END_HTML
+
+** 基础部分
+   本项目中主要使用 redux 作为状态管理容器， redux-saga 实现主要逻辑和异步操作等， ImmutableJS, reselect 则借
+   鉴了很多函数式编程的概念让 redux 变的更加高效和可预测。
+
+*** 状态管理
+   redux 目前看已经成为 flux 架构的标准实现（官方的 flux 实现使用起来有点繁琐），各种工具链很成熟，除了官方文
+   档以外，作者本人还在 egghead.io 录了 [[https://egghead.io/courses/getting-started-with-redux][一系列教程]] , 强烈推荐。
+
+*** 路由
+   react-router 非常优雅的实现了组件粒度大小的路由，项目中配合 webpack 的打包手段，实现了组件的 *按需异步加载*
+   , 具体方法的原理请看 [[http://blog.mxstbr.com/2016/01/react-apps-with-pages/][这篇文章]].
+
+
+* 项目架构: components and containers
+  关于 components 和 containers 和概念，强烈推荐 [[http://jaketrent.com/post/smart-dumb-components-react/][这篇文章]]
+
+  {% fi /images/2016.08.01.07.12.react-arg.png %}
+
+  文章中将 containers 和 component 叫做 smart component 和 dump component ，不过内容基本是一样的。
+  你也可以将 containers 看作 MVC(当然这个类比不是很准确) 中的 C ， 负责具体逻辑和收集展示用的异步数据等等， 而
+  component 只通过传递进来的 props 渲染样式（当然这个也不是绝对的，一些不需要 cache 的临时中间 ui 状态也可以使
+  用 state 保存。）
+
+  这篇文章不仅讲了两种 component 的区别，同时对复杂的深层嵌套组件的情况提出了一种解决思路，非常值得借鉴!
+
+  项目中每个文件夹是一个组件（component 或者 container）, 包含可能的 saga, selector 等(由项目生成器生成。)
+
+* 项目生成器
+** npm run setup
+   初始化项目：删除原来的 git 仓库，安装 package.json 中的依赖，最后初始化一个新的 git 仓库。
+   *注意*:
+   - 天朝上国的网络你懂的，所以你最好使用 vpn 再安装，退而求其次用淘宝的镜像 cnpm 。
+   - node 版本 *必须* 使用 5.0 以上，否则安装和测试（尤其是测试）会出现问题。
+
+** npm run start
+   启动开发环境，默认是在 3000 端口。
+   开发时的 dev 模式下会看到 warning ， 不用理会， production 下会启动 offline-plugin for webpack: https://github.com/NekR/offline-plugin
+
+** npm run generate
+   自动生成器，会给你提示生成项目所需的组件, 你也可以生成特定类别的组件部分， 比如：
+   - npm run generate component   ----- 生成一个组件
+   - npm run generate comtainer   ----- 生成一个 container
+   - npm run generate route       ----- 生成一个路由
+
+** npm run start:prod
+   启动生产服务器，并且将资源压缩优化。
+
+** npm run build
+   将所需文件编译到 build 目录下，然后你可以将该目录下的内容部署到你自己的服务器上。
+
+* css 部分
+** css-modules
+   项目中使用了目前最好的 css 模块化方案--  css-module，简单的说就是以组件为单位，在组件内的样式选择器上加上哈
+   希值，使其全局唯一，比如  someclass_dj8fie
+   具体细节部分可以参考[[https://github.com/css-modules/css-modules][ 这里]]
+
+   项目已经配置好 css-module，可以直接使用。
+   项目已经安装了 [[http://ant.design][antd]] , 你可以使用其中所有组件。
+
+   {% fi /images/2016.08.01.07.53.antd.png %}
+
+** theme 机制
+   如果需要的话，项目首页的 主题组件实现一个简单的主题机制，你可以按需扩展。
+
+* 测试
+*** 设置
+    现在项目里面我吧 lint:css 部分去掉了, 有几个原因：
+    - 我使用的编辑器 Emacs 的代码检查工具 flycheck 目前不支持 stylelint, [[https://github.com/flycheck/flycheck/pull/903][详见这个 issue]] , 并且
+      目前项目的使用 stylelint 是以 babel 插件而不是 npm cli 的方式，如果硬要让emacs支持还要单独
+      安装一个 stylelint。更麻烦。
+    - 目前使用的 css-module 的方案，基本都组件化了，是不是非得用 stylelint 去检查 css 代码中的错误？
+      我个人认为不是很必要。
+    - 最后，如果你非要使用，在项目的 package.json 中36行左右将
+
+    #+BEGIN_SRC js
+    "lint": "npm run lint:js",
+    #+END_SRC
+    改为如下即可：
+    #+BEGIN_SRC js
+    "lint": "npm run lint:js && npm run lint:css",
+    #+END_SRC
+
+*** react 组件测试
+    目前使用的是[[https://github.com/airbnb/enzyme][ enzyme]] 配合 [[https://github.com/mjackson/expect][expect]] (expect 库有好几个) 以及 [[https://github.com/algolia/expect-jsx][expect-jsx]]
+    每次部署前会自动运行每个组件的内部的 test 文件夹内的测试代码，如果失败则不会部署。
+
+** 使用 travis 持续集成
+   就是负责上面那个 build 标签.
+   项目自带了 travis.yml 的配置文件, 在 travis 平台注册并导入项目后就会在你每次 push commits 的时候帮你自动跑
+   一遍测试，非常方便
+
+** 自动监视 node 依赖的版本号
+   众所周知 node 项目中各个库的更新非常频繁，要是自己去一个个跟进恐怕得累死，所以有懒人帮你做了这个事情：
+   注册 [[https://david-dm.org/][david-dm]] 设置很简单，导入项目后自动分析你的 package.json， 将你的项目依赖和最新的包的版本做对比，给你
+   提供参考，同时还把 change-log 显示给你，非常方便。
+
+   {% fi /images/2016.08.01.07.54.david.png %}
+
+** 测试覆盖率
+   将项目导入使用 [[https://coveralls.io/][coveralls]] 即可自动执行覆盖率测试。具体看官网文档就可以了，简单使用。
+
+** 其他：
+   做这些事前最好先 npm run pretest 吧 lint:js 和 lint:eslint 跑一遍，为后来的模块测试做好准备。
