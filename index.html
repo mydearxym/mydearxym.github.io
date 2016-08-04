@@ -226,6 +226,166 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/04/CSS Tips/" itemprop="url">
+                  CSS Tips
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-04T21:46:41+08:00" content="2016-08-04">
+              2016-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tips/" itemprop="url" rel="index">
+                    <span itemprop="name">Tips</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tips/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>
+&#x4ECA;&#x5929;&#x5728; github trending &#x4E0A;&#x5076;&#x7136;&#x770B;&#x5230;&#x4E00;&#x4E9B; css &#x6280;&#x5DE7; (<a href="https://github.com/AllThingsSmitty/css-protips/blob/master/translations/zh-CN/README.md">&#x539F;&#x6587;</a>)&#xFF0C; &#x5B66;&#x4E60;&#x517C;&#x8BB0;&#x5F55;&#x4E00;&#x4E0B;&#x3002;
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">&#x4F7F;&#x7528; `:not()` &#x9009;&#x62E9;&#x5668;&#x6765;&#x51B3;&#x5B9A;&#x8868;&#x5355;&#x662F;&#x5426;&#x663E;&#x793A;&#x8FB9;&#x6846;</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+&#x4E0E;&#x5176;&#x52A0;&#x4E0A;&#x8FB9;&#x6846;&#x2026;&#x2026;
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* &#x6DFB;&#x52A0;&#x8FB9;&#x6846; */</span></span><br><span class="line"><span class="class">.nav</span> <span class="tag">li</span> <span class="rules">{</span><br><span class="line">  <span class="rule"><span class="attribute">border-right</span>:<span class="value"> <span class="number">1px</span> solid <span class="hexcolor">#666</span></span></span>;</span><br><span class="line">}</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x2026;&#x2026;&#x7136;&#x540E;&#x53BB;&#x6389;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x7684;&#x8FB9;&#x6846;&#x2026;&#x2026;
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* &#x53BB;&#x6389;&#x8FB9;&#x6846; */</span></span><br><span class="line"><span class="class">.nav</span> <span class="tag">li</span><span class="pseudo">:last-child</span> <span class="rules">{</span><br><span class="line">  <span class="rule"><span class="attribute">border-right</span>:<span class="value"> none</span></span>;</span><br><span class="line">}</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x2026;&#x2026;&#x4E0D;&#x5982;&#x4F7F;&#x7528; `:not()` &#x4F2A;&#x7C7B;&#x6765;&#x8FBE;&#x6210;&#x540C;&#x6837;&#x7684;&#x6548;&#x679C;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="class">.nav</span> <span class="tag">li</span><span class="pseudo">:not(</span><span class="pseudo">:last-child)</span> <span class="rules">{</span><br><span class="line">  <span class="rule"><span class="attribute">border-right</span>:<span class="value"> <span class="number">1px</span> solid <span class="hexcolor">#666</span></span></span>;</span><br><span class="line">}</span></span><br></pre></td></tr></table></figure>
+</div>
+
+
+<p>
+&#x5F53;&#x7136;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; `.nav li + li` &#x6216;&#x8005; `.nav li:first-child ~ li` &#x6765;&#x8FBE;&#x6210;&#xFF0C;&#x4F46;&#x662F; `:not()` &#x9009;&#x62E9;&#x5668;&#x7684;&#x65B9;&#x5F0F;&#x66F4;&#x6E05;&#x6670;&#x660E;&#x4E86;&#xFF0C;&#x4E00;&#x76EE;&#x4E86;&#x7136;&#x3002;
+<a href="http://codepen.io/AllThingsSmitty/pen/LkymvO">&#x6F14;&#x793A;</a>
+</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/04/CSS Tips/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/01/关于npm 依赖的开源包版本控制/" itemprop="url">
                   关于npm 依赖的开源包版本控制
                 </a>
@@ -1429,141 +1589,6 @@ todo:  layout
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/09/use_githook_to_deploy/" itemprop="url">
-                  使用 git hooks 自动化部署
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-09T15:33:29+08:00" content="2016-05-09">
-              2016-05-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/工具链/" itemprop="url" rel="index">
-                    <span itemprop="name">工具链</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/工具链/Emacs/" itemprop="url" rel="index">
-                    <span itemprop="name">Emacs</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>
-<img src="/images/2016.05.09.22.16.newLogo.png" class="full-image" />
-</p>
-
-
-<p>
-&#x5F00;&#x59CB;&#x4E4B;&#x524D;&#xFF0C;&#x5148;&#x7ED9; spacemacs &#x6362;&#x4E2A; new logo
-</p>
-
-
-<p>
-&#x9700;&#x6C42;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5C31;&#x662F;&#x5728;&#x672C;&#x5730; git push &#x4E4B;&#x540E;&#x670D;&#x52A1;&#x5668;&#x7AEF;&#x80FD;&#x591F;&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#x3001;&#x800C;&#x4E0D;&#x662F;&#x624B;&#x52A8;&#x767B;&#x9646;&#x4EE5;&#x540E; git pull&#x3002;&#x3002;&#x3002;
-&#x4F46;&#x5728;&#x6D6A;&#x8D39;&#x4E86;&#x4E00;&#x4E0A;&#x5348;&#x65F6;&#x95F4;&#xFF0C;&#x770B;&#x4E86;&#x65E0;&#x6570;&#x50CF;&#x732A;&#x5927;&#x80A0;&#x4E00;&#x6837;&#x7ED5;&#x6765;&#x7ED5;&#x53BB;&#x7684;&#x4E2D;&#x6587;&#x6559;&#x7A0B;&#x4EE5;&#x540E;&#xFF0C;&#x54E5;&#x771F;&#x7684;&#x662F;&#x65E0;&#x8BED;&#x4E86;&#x3002;
-</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/09/use_githook_to_deploy/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1609,7 +1634,7 @@ todo:  layout
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1617,7 +1642,7 @@ todo:  layout
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1626,7 +1651,7 @@ todo:  layout
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
