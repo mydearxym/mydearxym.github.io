@@ -1,0 +1,9 @@
+#+TITLE: SVG 初探
+#+DATE: <2016-08-09 16:43:23>
+#+TAGS: SVG
+#+CATEGORIES: 动画,SVG
+
+[[http://www.w3school.com.cn/svg/][w3c SVG 教程]]
+
+
+[[http://documentup.com/wout/SVG.js][SVG.js 文档]]
