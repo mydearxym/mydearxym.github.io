@@ -226,6 +226,406 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/28/react项目最佳实践/" itemprop="url">
+                  react项目最佳实践
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-28T15:35:33+08:00" content="2016-07-28">
+              2016-07-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/react/" itemprop="url" rel="index">
+                    <span itemprop="name">react</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>
+&#x9879;&#x76EE;&#x5730;&#x5740; <a href="https://github.com/mydearxym/coder_club_frontend">&#x8FD9;&#x91CC;</a>, &#x57FA;&#x4E8E; <a href="https://github.com/mxstbr/react-boilerplate">react-boilpate</a>
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">js &#x90E8;&#x5206;</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">&#x6982;&#x8FF0;</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+js &#x90E8;&#x5206;&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x5230;&#x7684;&#x6280;&#x672F;&#x662F; React, Redux, Redux-saga, react-router, ImmutableJS, reselect,&#x4EE5;&#x53CA;&#x76F8;&#x5BF9;&#x5E94;&#x7684; es6&#x8BED;
+&#x6CD5;&#x7B49;&#x7B49;&#x3002;&#x5355;&#x72EC;&#x770B;&#x6BCF;&#x4E00;&#x4E2A;&#xFF0C;&#x5E76;&#x4E0D;&#x96BE;&#xFF0C;&#x4F46;&#x662F;&#x7531;&#x4E8E;&#x5176;&#x4E2D;&#x6982;&#x5FF5;&#x6BD4;&#x8F83;&#x65B0;, &#x9700;&#x8981;&#x4F60;&#x77E5;&#x9053;&#x8FD9;&#x6BCF;&#x4E00;&#x4E2A;&#x6280;&#x672F;&#x5728;&#x6574;&#x4E2A; react &#x9879;&#x76EE;&#x4E2D;&#x6240;&#x626E;&#x6F14;&#x7684;&#x89D2;
+&#x8272;&#xFF0C;&#x4EE5;&#x53CA;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x6240;&#x4EE5;&#x7406;&#x89E3;&#x8D77;&#x6765;&#x8FD8;&#x662F;&#x9700;&#x8981;&#x82B1;&#x8D39;&#x4E00;&#x4E9B;&#x65F6;&#x95F4;&#x548C;&#x529F;&#x592B;&#x7684;&#x3002;
+</p>
+
+<p>
+&#x53E6;&#x5916;&#x548C;&#x5176;&#x4ED6;&#x4E3B;&#x6D41;&#x7684; web &#x6846;&#x67B6;&#x76F8;&#x6BD4;&#xFF0C;react &#x91C7;&#x7528;&#x4E86;&#x5B8C;&#x5168;&#x4E0D;&#x540C;&#x7684;&#x6269;&#x5C55;&#x601D;&#x8DEF;, &#x5176;&#x4ED6;&#x7684;&#x6846;&#x67B6;&#xFF1A; Angular, Ember, Backbone, Vue
+&#x7B49;&#x7B49;&#x90FD;&#x662F;&#x91C7;&#x7528;&#x4E86;&#x5728; html &#x4E2D;&#x6269;&#x5C55; js &#x7684;&#x505A;&#x6CD5;&#xFF0C; &#x5EF6;&#x7EED;&#x4E86; MVC &#x6784;, &#x800C; react &#x501F;&#x9274;&#x4E86;&#x67D0;&#x4E9B;&#x6E38;&#x620F;&#x5F00;&#x53D1;&#x7684;&#x601D;&#x8DEF;&#x548C;&#x5F88;&#x591A;&#x51FD;&#x6570;&#x5F0F;&#x7F16;&#x7A0B;
+&#x624B;&#x6BB5;&#xFF0C;&#x4F7F;&#x7528; virtual-dom &#x548C; flux &#x67B6;&#x6784;&#x5B9E;&#x73B0;&#x4E86;&#x6570;&#x636E;&#x7684;&#x5355;&#x5411;&#x6E05;&#x6670;&#x7684;&#x6D41;&#x5411;&#xFF0C;jsx &#x548C; es6 &#x66F4;&#x662F;&#x8BA9;&#x7F16;&#x5199;&#x7EC4;&#x4EF6;&#x5316;&#x7684; js &#x7A0B;&#x5E8F;&#x5145;&#x6EE1;&#x4E50;
+&#x8DA3;&#x3002;
+</p>
+
+<p>
+react &#x6280;&#x672F;&#x5708;&#x5DF2;&#x7ECF;&#x6E10;&#x6E10;&#x6210;&#x719F;&#xFF0C;&#x5728; web , iOS, android , &#x751A;&#x81F3;&#x8DE8;&#x5E73;&#x53F0;&#x684C;&#x9762;&#x7AEF;&#x90FD;&#x6709;&#x4EAE;&#x773C;&#x7684;&#x8868;&#x73B0;&#xFF0C;&#x662F;&#x7EDD;&#x5BF9;&#x503C;&#x5F97;&#x6295;&#x8D44;&#x548C;&#x80FD;&#x89E3;&#x653E;&#x751F;&#x4EA7;
+&#x529B;&#x7684;&#x6280;&#x672F;&#x3002; &#x793E;&#x533A;&#x7ECF;&#x8FC7;&#x591A;&#x5E74;&#x7684;&#x6D3B;&#x8DC3;&#x53D1;&#x5C55;&#xFF0C;&#x5404;&#x79CD;&#x6559;&#x7A0B;&#x90FD;&#x6BD4;&#x8F83;&#x9F50;&#x5168;&#xFF0C;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;&#x6280;&#x672F;&#x90FD;&#x6709;&#x76F8;&#x5E94;&#x7684;&#x4E2D;&#x6587;&#x7248;&#xFF08;&#x4E2D;&#x82F1;&#x6587;&#x7248;&#x5EFA;&#x8BAE;&#x90FD;&#x770B;&#x51E0;&#x904D;&#xFF09;&#xFF1A;
+<a href="http://reactjs.cn/">react&#x4E2D;&#x6587;&#x7AD9;</a> , <a href="http://cn.redux.js.org/">redux &#x4E2D;&#x6587;&#x6587;&#x6863;</a> ,<a href="https://react-guide.github.io/react-router-cn/"> react-router &#x4E2D;&#x6587;&#x6587;&#x6863;</a> , <a href="http://leonshi.com/redux-saga-in-chinese/">redux-saga &#x4E2D;&#x6587;&#x6587;&#x6863;</a>, <a href="http://es6.ruanyifeng.com/">es6 &#x8BED;&#x6CD5;&#x5B66;&#x4E60;</a> &#x7B49;&#x7B49;&#x3002;
+</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/28/react项目最佳实践/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/06/16/Reactive-GraphQL-Architecture/" itemprop="url">
+                  响应式 GraphQL 架构
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-16T11:36:17+08:00" content="2016-06-16">
+              2016-06-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/转载/" itemprop="url" rel="index">
+                    <span itemprop="name">转载</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>
+&#x6587;&#x7AE0;&#x4F5C;&#x8005;&#x4ECB;&#x7ECD;&#x4E86;&#x5982;&#x4F55;&#x5728; GraphQL &#x4E0A;&#x5B9E;&#x73B0;&#x54CD;&#x5E94;&#x5F0F;&#x6570;&#x636E;&#x67E5;&#x8BE2;&#x7ED3;&#x6784;&#x3002;
+</p>
+
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">&#x9AD8;&#x6C34;&#x5E73;&#x8BBE;&#x8BA1;</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x9AD8;&#x5EA6;&#x6982;&#x8FF0;&#x7684;&#x54CD;&#x5E94;&#x5F0F; GraphQL &#x6570;&#x636E;&#x52A0;&#x8F7D;&#x7CFB;&#x7EDF;&#x7684;&#x4F53;&#x7CFB;&#x7ED3;&#x6784;&#x3002;&#xFF0C;&#x6211;&#x4EEC;&#x8FD9;&#x4E48;&#x505A;&#x7684;&#x76EE;&#x7684;&#x662F;&#x5E0C;&#x671B;&#x5F97;&#x5230;&#x90A3;&#x4E9B;&#x76F8;&#x5173;&#x9886;&#x57DF;&#x5DE5;&#x7A0B;&#x5E08;&#x7684;&#x53CD;&#x9988;&#x3002;
+&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x5206;&#x4EAB;&#x6211;&#x4EEC;&#x6B63;&#x5728;&#x505A;&#x7684;&#x4E8B;&#x4EE5;&#x786E;&#x8BA4;&#x4EBA;&#x4EEC;&#x662F;&#x5426;&#x5BF9;&#x5B83;&#x611F;&#x5174;&#x8DA3;&#xFF0C;&#x540C;&#x65F6;&#x4F7F;&#x5F97;&#x8BE5;&#x9886;&#x57DF;&#x4E2D;&#x7684;&#x4EBA;&#x80FD;&#x591F;&#x63A5;&#x53D7;&#x6211;&#x4EEC;&#x7684;&#x8BBE;&#x8BA1;&#x3002;
+</p>
+
+<p>
+&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x4E0D;&#x4E86;&#x89E3;&#x6211;&#x4EEC;&#x7684;&#x8BBE;&#x8BA1;&#xFF0C;&#x8BF7;&#x9605;&#x8BFB;&#x6211;&#x4EEC;&#x7684;<a href="http://info.meteor.com/blog/reactive-graphql">&#x4ECB;&#x7ECD;&#x9875;&#x9762;</a> &#xFF0C;&#x8FD9;&#x4E2A;&#x9875;&#x9762;&#x6982;&#x8FF0;&#x4E86;&#x6240;&#x6709;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;&#x3002;
+&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x9605;&#x8BFB; Arunoda &#x7684;&#x6587;&#x7AE0;&#xFF0C;&#x90A3;&#x7BC7;&#x6587;&#x7AE0;&#x603B;&#x7ED3;&#x4E86;&#x6211;&#x4EEC;&#x7684;&#x4ECB;&#x7ECD;&#x5185;&#x5BB9;&#xFF1A;<a href="https://voice.kadira.io/meteor-s-reactive-graphql-is-just-awesome-b21074231528#.3h3hmtbm2">Meteor&apos;s Reactive GraphQL is Just Awesome</a>
+</p>
+
+<p>
+<img src="/images/2016.06.16.11.43.RGA-1.png" class="full-image" />
+</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/06/16/Reactive-GraphQL-Architecture/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/06/09/shuimu-emacs/" itemprop="url">
+                  水木社区的 emacs 教程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-09T23:11:22+08:00" content="2016-06-09">
+              2016-06-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Emacs/" itemprop="url" rel="index">
+                    <span itemprop="name">Emacs</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Emacs/lisp/" itemprop="url" rel="index">
+                    <span itemprop="name">lisp</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">&#x4E00;&#x4E2A; Hello World &#x4F8B;&#x5B50;</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+&#x81EA;&#x4ECE; K&amp;R &#x4EE5;&#x6765;&#xFF0C;hello world &#x7A0B;&#x5E8F;&#x5386;&#x6765;&#x90FD;&#x662F;&#x7A0B;&#x5E8F;&#x8BED;&#x8A00;&#x6559;&#x7A0B;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x3002;&#x6211;&#x4E5F;&#x7528;&#x4E00;&#x4E2A; hello world
+&#x7684;&#x4F8B;&#x5B50;&#x6765;&#x6F14;&#x793A; emacs &#x91CC;&#x6267;&#x884C; elisp &#x7684;&#x73AF;&#x5883;&#x3002;&#x4E0B;&#x9762;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;&#x8BED;&#x53E5;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">message</span> <span class="string">&quot;hello world&quot;</span>)</span></span><br></pre></td></tr></table></figure>
+</div>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/06/09/shuimu-emacs/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/08/beatify-of-lisp/" itemprop="url">
                   lisp 之美
                 </a>
@@ -446,6 +846,11 @@ SPC z x  &#x653E;&#x5927;&#x7F29;&#x5C0F;&#x5B57;&#x4F53;
 C-x r l  &#x5217;&#x51FA; bookmark list
 C-x r b  jump bookmark
 C-x r m  set bookmark
+</p>
+
+<p>
+spc b m d delete bookmark
+New key binding SPC f b for bookmark-jump
 </p>
 
 <p>
@@ -1182,170 +1587,11 @@ SPC l L load layout
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/16/give_up_vim/" itemprop="url">
-                  放弃 vim
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-16T11:50:24+08:00" content="2015-11-16">
-              2015-11-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/vim/" itemprop="url" rel="index">
-                    <span itemprop="name">vim</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-
-<p>
-&#x81EA;&#x4ECE; webstorm &#x8F6C;&#x56DE;&#x5230; vim &#x540E;&#xFF0C;&#x54E5;&#x5BF9;&#x4E8E; vim &#x7684;&#x67D0;&#x4E9B;&#x65B9;&#x9762;&#x662F;&#x8D8A;&#x6765;&#x8D8A;&#x65E0;&#x6CD5;&#x5FCD;&#x53D7;&#x4E86;&#xFF0C;&#x8FD9;&#x91CC;&#x5217;&#x4E3E;&#x4E00;&#x4E9B;&#xFF0C;&#x95F2;&#x65F6;&#x518D;&#x8865;&#x5145;&#x3002;
-</p>
-
-
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">&#x9519;&#x8BEF;&#x68C0;&#x67E5;&#x4F1A;&#x5361;&#x4F4F;&#xFF0C;&#x975E;&#x5F02;&#x6B65;</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-vim &#x4E2D;&#x9519;&#x8BEF;&#x68C0;&#x67E5;&#x666E;&#x904D;&#x4F7F;&#x7528; <a href="https://github.com/scrooloose/syntastic" target="_blank" rel="external">Syntastic &#x63D2;&#x4EF6;</a> , &#x5F88;&#x806A;&#x660E;&#x7684;&#x8C03;&#x7528;&#x5404;&#x81EA;&#x8BED;&#x8A00;&#x7684;&#x8BED;&#x6CD5;&#x68C0;&#x67E5;&#x5DE5;&#x5177;&#xFF0C;&#x6BD4;&#x5982; javascript &#x53EF;&#x4EE5;&#x4F7F;&#x7528;
-eslint &#x7B49;&#x3002; &#x4F46;&#x662F;&#x8FD9;&#x8D27;&#x4E0D;&#x662F;&#x5F02;&#x6B65;&#x7684; <b>X3</b> &#x2026; &#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x4F60;&#x6BCF;&#x6B21;&#x8FD0;&#x884C;&#x5B8C; :SyntasticCheck &#x540E;&#xFF0C;&#x6574;&#x4E2A; vim &#x5C31;&#x5361;&#x4F4F;&#x4E86;
-&#x554A;&#x554A;&#x554A;&#xFF01;&#x9ED8;&#x8BA4;&#x8FD8;&#x662F;&#x6587;&#x4EF6;&#x5185;&#x5BB9;&#x6539;&#x53D8;&#x5C31;&#x8C03;&#x7528; SyntasticCheck&#xFF0C; &#x6539;&#x6210; save &#x6587;&#x4EF6;&#x89E6;&#x53D1;&#x540E;&#x4E00;&#x6837;&#x5F88;&#x5361;&#x554A;&#x554A;&#x554A;&#x554A;! &#x6700;&#x86CB;&#x75BC;&#x7684;&#x662F;
-&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x662F;&#x65E0;&#x89E3;&#x7684; <a href="https://github.com/scrooloose/syntastic/pull/370" target="_blank" rel="external">&#x6BD4;&#x5982;&#x8FD9;&#x91CC;</a> &#xFF0C;&#x8C8C;&#x4F3C;&#x672A;&#x6765; vim 8 &#x4F1A;&#x6709;&#x5F02;&#x6B65;&#x7684;&#x6267;&#x884C;&#x673A;&#x5236;&#x3002; &#x53EF;&#x662F; vim 8 &#x2026;. &#x53BB; die &#x5427;
-</p>
-
-<p>
-<img src="/images/2016.05.16.18.03.vim1.png" class="full-image">
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">&#x8BED;&#x6CD5;&#x9AD8;&#x4EAE;&#x95F4;&#x6B47;&#x6027;&#x5931;&#x7075;</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-&#x4E3A;&#x4E86;&#x9AD8;&#x4EAE; <b>react</b> &#x4EE3;&#x7801;&#xFF0C;&#x54E5;&#x653E;&#x5F03;&#x4E86;&#x548C;&#x5AB3;&#x5987;&#x4EB2;&#x70ED;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x62AB;&#x661F;&#x6234;&#x6708;&#x7684;&#x627E;&#x4E86;&#x5404;&#x79CD;&#x63D2;&#x4EF6;&#xFF0C;&#x7EC8;&#x4E8E;&#x8BA9; react &#x4EE3;&#x7801;&#x6709;&#x4E86;&#x70B9;&#x4EBA;&#x6837;&#xFF1A;
-</p>
-
-<p>
-<img src="/images/2016.05.16.18.13.vim2.png" class="full-image">
-</p>
-
-<p>
-&#x4EC0;&#x4E48; <b>this</b> &#x5566;&#xFF0C; <b>state</b> &#x5566;&#xFF0C;&#x90FD;&#x7ED9;&#x4F60;&#x9AD8;&#x4EAE;&#x4E86;&#xFF0C;&#x5F88;&#x8D34;&#x5FC3;&#x6709;&#x6728;&#x6709;! &#x53EF;&#x662F;&#xFF0C;&#x53EF;&#x662F;&#x53C8;&#x6765;&#x4E86;&#xFF0C;&#x8FD9;&#x79CD;&#x9AD8;&#x4EAE;&#x4F7F;&#x7528;&#x4E2A;&#x4E00;&#x6BB5;&#x5C31;&#x4F1A;&#x5931;&#x7075;
-&#x554A;&#x554A;&#x554A;&#xFF01;&#x5C3C;&#x739B;&#xFF0C;&#x4F60;&#x731C;&#x54E5;&#x662F;&#x600E;&#x4E48;&#x89E3;&#x51B3;&#x7684;&#xFF0C;&#x4FDD;&#x5B58;&#x5F53;&#x524D; session&#xFF0C;&#x91CD;&#x65B0;&#x6253;&#x5F00;&#x3002;&#x3002;&#x8FD9;&#x7279;&#x4E48;&#x5F97;&#x6709;&#x591A;&#x86CB;&#x75BC;&#x554A;&#xFF01;
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">nerdTree &#x4E71;&#x8DF3;</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-&#x51B2;&#x6587;&#x4EF6;&#x8F6C;&#x5230; nerdTree &#x4E4B;&#x540E;&#x5728;&#x56DE;&#x5230;&#x5F53;&#x524D;&#x7F16;&#x8F91;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x7ECF;&#x5E38;&#x4E0D;&#x77E5;&#x9053;&#x8C03;&#x8F6C;&#x5230;&#x5230;&#x4EC0;&#x4E48;&#x4F4D;&#x7F6E;&#x53BB;&#x4E86;&#xFF0C;&#x72D7;&#x773C;&#x770B;&#x82B1;&#x4E86;&#x4E0D;&#x8BF4;&#xFF0C;&#x601D;&#x8DEF;&#x7ECF;&#x5E38;&#x5C31;
-&#x8FD9;&#x4E48;&#x4E71;&#x4E86;&#x3002;
-</p>
-</div>
-</div>
-
-<div></div>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1386,7 +1632,7 @@ eslint &#x7B49;&#x3002; &#x4F46;&#x662F;&#x8FD9;&#x8D27;&#x4E0D;&#x662F;&#x5F02;
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1394,7 +1640,7 @@ eslint &#x7B49;&#x3002; &#x4F46;&#x662F;&#x8FD9;&#x8D27;&#x4E0D;&#x662F;&#x5F02;
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1403,7 +1649,7 @@ eslint &#x7B49;&#x3002; &#x4F46;&#x662F;&#x8FD9;&#x8D27;&#x4E0D;&#x662F;&#x5F02;
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

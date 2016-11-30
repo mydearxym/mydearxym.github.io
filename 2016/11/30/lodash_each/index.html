@@ -1,0 +1,608 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <!-- link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css" -->
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x6628;&amp;#x5929;&amp;#x52A0;&amp;#x73ED;&amp;#x5230; 10 &amp;#x70B9;&amp;#x591A;&amp;#xFF0C;&amp;#x7EC8;&amp;#x4E8E;&amp;#x89E3;&amp;#x51B3;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x56F0;&amp;#x6270;&amp;#x534A;&amp;#x4E2A;&amp;#x6708;&amp;#x7684; bug&amp;#xFF0C;&amp;#x8BA9;&amp;#x54">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lodash_each 引发的血案">
+<meta property="og:url" content="http://yoursite.com/2016/11/30/lodash_each/index.html">
+<meta property="og:site_name" content="Mydearxym">
+<meta property="og:description" content="&amp;#x6628;&amp;#x5929;&amp;#x52A0;&amp;#x73ED;&amp;#x5230; 10 &amp;#x70B9;&amp;#x591A;&amp;#xFF0C;&amp;#x7EC8;&amp;#x4E8E;&amp;#x89E3;&amp;#x51B3;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x56F0;&amp;#x6270;&amp;#x534A;&amp;#x4E2A;&amp;#x6708;&amp;#x7684; bug&amp;#xFF0C;&amp;#x8BA9;&amp;#x54">
+<meta property="og:updated_time" content="2016-11-30T04:21:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lodash_each 引发的血案">
+<meta name="twitter:description" content="&amp;#x6628;&amp;#x5929;&amp;#x52A0;&amp;#x73ED;&amp;#x5230; 10 &amp;#x70B9;&amp;#x591A;&amp;#xFF0C;&amp;#x7EC8;&amp;#x4E8E;&amp;#x89E3;&amp;#x51B3;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&amp;#x56F0;&amp;#x6270;&amp;#x534A;&amp;#x4E2A;&amp;#x6708;&amp;#x7684; bug&amp;#xFF0C;&amp;#x8BA9;&amp;#x54">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> lodash_each 引发的血案 | Mydearxym </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mydearxym</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">谢一面的 Blog</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                lodash_each 引发的血案
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-30T10:22:17+08:00" content="2016-11-30">
+              2016-11-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+
+<p>
+&#x6628;&#x5929;&#x52A0;&#x73ED;&#x5230; 10 &#x70B9;&#x591A;&#xFF0C;&#x7EC8;&#x4E8E;&#x89E3;&#x51B3;&#x4E86;&#x4E00;&#x4E2A;&#x56F0;&#x6270;&#x534A;&#x4E2A;&#x6708;&#x7684; bug&#xFF0C;&#x8BA9;&#x54E5;&#x5A13;&#x5A13;&#x9053;&#x6765;&#x3002;
+</p>
+
+<p>
+&#x81EA;&#x4ECE;&#x9879;&#x76EE;&#x5F15;&#x5165;&#x817E;&#x8BAF;&#x7684; webim &#x4F5C;&#x4E3A;&#x63A8;&#x9001;&#x548C;&#x6D88;&#x606F;&#x4E34;&#x65F6;&#x5B58;&#x50A8;&#x4EE5;&#x540E;&#xFF0C;&#x9875;&#x9762;&#x4E0A;&#x7ECF;&#x5E38;&#x51FA;&#x73B0;&#x6389;&#x6D88;&#x606F;&#x7684;&#x95EE;&#x9898;&#xFF0C;
+&#x6D88;&#x606F;&#x53D1;&#x7684;&#x6162;&#x8FD8;&#x884C;&#xFF0C;&#x57FA;&#x672C;&#x80FD;&#x6536;&#x5230;&#xFF0C;&#x7A0D;&#x5FAE;&#x5FEB;&#x70B9;&#xFF0C;&#x6BD4;&#x5982;&#x4E24;&#x4E2A;&#x8D26;&#x53F7;&#x4E00;&#x8D77;&#x53D1;&#xFF0C;&#x80FD;&#x7ED9;&#x4F60;&#x4E22;&#x6389;&#x4E00;&#x534A;&#x3002;&#x3002;&#x3002;&#x6211;
+&#x4E00;&#x5EA6;&#x6000;&#x7591;&#x662F; webSDK &#x7684;&#x95EE;&#x9898;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x53EA;&#x7528;&#x5230;&#x4E86;&#x8FD9;&#x4E2A; SDK &#x7684;&#x521D;&#x59CB;&#x5316;&#x548C;&#x6D88;&#x606F;&#x6536;&#x53D1;&#x8FD9;&#x79CD;&#x6BD4;&#x8F83;&#x7B80;
+&#x5355;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x4EE3;&#x7801;&#x4E00;&#x773C;&#x5C31;&#x80FD;&#x671B;&#x7A7F;&#xFF0C;&#x8981;&#x547D;&#x7684;&#x662F; android &#x7AEF;&#x548C; iOS &#x7AEF;&#x6CA1;&#x6709;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x66F4;&#x66F4;&#x8981;&#x547D;&#x7684;
+&#x662F;&#x6628;&#x5929;&#x6211;&#x5076;&#x7136;&#x53D1;&#x73B0;&#x65B0;&#x5F00;&#x53D1;&#x7684;&#x5FAE;&#x4FE1;&#x7AEF;&#x5C45;&#x7136;&#x4E5F;&#x6CA1;&#x6709;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;&#x3002;&#x8FD9;&#x5C31;&#x65E5;&#x4E86;&#x684C;&#x5B50;&#x4E86;&#xFF0C;&#x90FD;&#x662F; webSDK
+&#xFF0C;&#x8138;&#x6253;&#x7684;&#x55D6;&#x55D6;&#x7684;&#xFF0C;&#x54E5;&#x5BF9;&#x8FD9;&#x90A3;&#x51E0;&#x5341;&#x884C;&#x4EE3;&#x7801;&#x5F04;&#x4E86;&#x51E0;&#x4E2A;&#x5C0F;&#x65F6;&#xFF0C;&#x4E2D;&#x95F4;&#x8FC7;&#x7A0B;&#x7701;&#x7565;&#x3002;&#x3002;
+</p>
+
+
+<p>
+&#x603B;&#x4E4B;&#x6700;&#x540E;&#x8FD8;&#x662F;&#x901A;&#x8FC7;&#x539F;&#x59CB;&#x7684;&#x6392;&#x9664;&#x6CD5;&#x627E;&#x5230;&#x4E86;&#x539F;&#x56E0; &#x2014; &#x6211;&#x5728; lodash &#x7684; <b>_.each</b> &#x51FD;&#x6570;&#x91CC;&#x9519;&#x8BEF;&#x7684;
+&#x4F7F;&#x7528;&#x4E86; <b>return false</b>, &#x4ECE; <a href="http://stackoverflow.com/questions/33266946/how-to-stop-lodash-js-each-loop" target="_blank" rel="external">&#x8FD9;&#x4E2A; issue</a> &#x4F60;&#x4F1A;&#x770B;&#x5230;&#xFF0C; return false &#x4F1A;&#x76F4;&#x63A5;&#x5C06;&#x672C;&#x6B21;&#x8FED;&#x4EE3;&#x505C;
+&#x6B62;&#x6389;&#x3002;&#x3002;&#x800C;&#x6211;&#x7684;&#x4F7F;&#x7528;&#x573A;&#x666F;&#x662F;&#x4E00;&#x65E6;&#x6D88;&#x606F;&#x53D1;&#x5FEB;&#x4E86;&#x4F1A;&#x5806;&#x79EF;&#x5230;&#x597D;&#x51E0;&#x6761;&#x4E00;&#x8D77;&#x8FC7;&#x6765;&#xFF0C;&#x6211;&#x5982;&#x679C;&#x5728;&#x5224;&#x65AD;&#x4E2D;&#x95F4;&#x67D0;
+&#x4E2A;&#x903B;&#x8F91;&#x7684;&#x65F6;&#x5019;&#x4F7F;&#x7528;&#x4E86; <b>return false</b> &#x6BD4;&#x5982;&#x4E0B;&#x9762;&#xFF1A;
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">_.each(msgs, (item) =&gt; {</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">if</span> (content.event === <span class="string">&apos;weixin_msg&apos;</span>) {</span><br><span class="line">    <span class="keyword">let</span> _data = <span class="built_in">JSON</span>.parse(content.data)</span><br><span class="line">    WeixinReciver.onMessageArrived(_data)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span> <span class="comment">// here cause bug</span></span><br><span class="line">  }</span><br><span class="line">  ...</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x539F;&#x610F;&#x662F;&#x60F3;&#x7701;&#x53BB;&#x4E0B;&#x9762;&#x7684;&#x5224;&#x65AD;&#x53BB;&#x904D;&#x5386;&#x4E0B;&#x4E00;&#x6761;&#x6D88;&#x606F;, &#x7ED3;&#x679C;&#x8FD9; <b>return false</b> &#x76F4;&#x63A5;&#x628A;&#x5FAA;&#x73AF;&#x90FD;&#x7EC8;&#x6B62;&#x4E86;&#x3002;
+&#x6240;&#x4EE5;&#x4ECE; ui &#x754C;&#x9762;&#x4E0A;&#x770B;&#x6765;&#x7684;&#x6548;&#x679C;&#x5C31;&#x662F;&#x6709;&#x4E9B;&#x6D88;&#x606F;&#x6389;&#x4E86;&#x3002;&#x3002;
+</p>
+
+<p>
+&#x800C;&#x5B9E;&#x9645;&#x4E0A; <a href="https://lodash.com/docs/4.17.2#forEach" target="_blank" rel="external">lodash &#x7684;&#x6587;&#x6863;&#x90E8;&#x5206;</a> &#x662F;&#x6709;&#x63D0;&#x53CA;&#x7684;&#xFF1A;
+</p>
+
+<p>
+<blockquote class="blockquote-center"><p>Iterates over elements of collection and invokes iteratee for each element. The<br>iteratee is invoked with three arguments: (value, index|key, collection).<br>Iteratee functions may exit iteration early by explicitly returning false.</p>
+</blockquote>
+</p>
+
+<div></div>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/24/Phoenix 初探/" rel="next" title="Phoenix 初探">
+                <i class="fa fa-chevron-left"></i> Phoenix 初探
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="老谢的博客" />
+          <p class="site-author-name" itemprop="name">老谢的博客</p>
+          <p class="site-description motion-element" itemprop="description">人一旦被信任，就会愿意用更多的尊严来加倍回报信任。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mydearxym" target="_blank">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/mydearxym" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">老谢的博客</span>
+</div>
+
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/vendors/jquery-scrollintoview/jquery.scrollintoview.min.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
